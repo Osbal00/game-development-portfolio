@@ -1,23 +1,46 @@
-# Proyectos de Game Development
+<div align="center">
 
-Esta carpeta contiene los videojuegos y prototipos desarrollados durante la asignatura **Game Development**.
+# Galería de proyectos
 
-Cada proyecto tendrá su propia carpeta y documentación, incluyendo:
+### Videojuegos y prototipos desarrollados en Game Development
 
-- Nombre del videojuego.
-- Descripción.
-- Género.
-- Objetivo del jugador.
-- Mecánica principal.
-- Controles.
+Aquí puedes explorar la documentación y las versiones jugables de mis proyectos.
+
+</div>
+
+---
+
+## MathBirds
+
+**MathBirds** es un videojuego educativo 2D en el que el jugador controla un personaje volador mientras resuelve operaciones matemáticas.
+
+El jugador debe superar 10 preguntas, seleccionar la respuesta correcta mediante el movimiento del personaje y conseguir la mayor puntuación posible.
+
+- **Género:** Educativo, Arcade y Aventura 2D.
+- **Tecnologías:** HTML5, CSS3, JavaScript y Canvas 2D.
+- **Estado:** Prototipo funcional.
+- **Plataforma:** Navegador web.
+
+### Acceder al proyecto
+
+[![Ver documentación](https://img.shields.io/badge/Ver_documentación-README-7B2CBF?style=for-the-badge)](./mathbirdse](https://img.shields.io/badge/Jugar-Próximamente-lightgrey?style=for-Próximos proyectos
+
+Los demás videojuegos serán agregados progresivamente.
+
+Cada proyecto tendrá:
+
+- Una descripción completa.
+- Una captura de pantalla.
+- Información sobre sus controles.
 - Tecnologías utilizadas.
-- Capturas de pantalla.
-- Uso de inteligencia artificial.
-- Aprendizajes obtenidos.
-- Mejoras futuras.
+- Explicación del apoyo de inteligencia artificial.
+- Aprendizajes y mejoras futuras.
+- Un botón para abrir la documentación.
+- Un botón para jugar desde el navegador, cuando sea posible.
 
-## Proyectos previstos
+---
 
-Se agregarán aproximadamente cinco videojuegos o prototipos.
+### Navegación
 
-Los proyectos serán incorporados progresivamente cuando estén disponibles.
+https://img.shields.io/badge/Volver-al_portafolio-0078D4?style=for-the-badge](../)
+`
