@@ -1,0 +1,2367 @@
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MathFly Adventure</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #101936;
+    color: white;
+    overflow: hidden;
+    user-select: none;
+}
+
+#game {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background: #45c7f4;
+}
+
+canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.screen {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px;
+    text-align: center;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.overlay {
+    background: rgba(9, 20, 52, .88);
+    backdrop-filter: blur(6px);
+}
+
+.panel {
+    width: min(620px, 94vw);
+    padding: 35px;
+    border-radius: 25px;
+    background: rgba(255,255,255,.12);
+    border: 3px solid rgba(255,255,255,.3);
+    box-shadow: 0 20px 60px rgba(0,0,0,.3);
+}
+
+.title {
+    font-size: clamp(42px, 8vw, 78px);
+    color: #ffe44b;
+    text-shadow: 4px 4px 0 #e35c2f;
+    margin-bottom: 12px;
+}
+
+.subtitle {
+    font-size: clamp(18px, 3vw, 26px);
+    margin-bottom: 30px;
+}
+
+.instructions {
+    max-width: 520px;
+    margin: 20px auto 30px;
+    line-height: 1.7;
+    font-size: 18px;
+}
+
+button {
+    border: none;
+    border-radius: 14px;
+    padding: 15px 28px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #15213f;
+    background: #ffe34d;
+    box-shadow: 0 6px 0 #d49f1e;
+}
+
+button:active {
+    transform: translateY(4px);
+    box-shadow: 0 2px 0 #d49f1e;
+}
+
+#hud {
+    position: absolute;
+    z-index: 5;
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    display: flex;
+    justify-content: space-between;
+    pointer-events: none;
+}
+
+.hudBox {
+    background: rgba(13,29,68,.85);
+    border: 2px solid rgba(255,255,255,.35);
+    border-radius: 14px;
+    padding: 10px 16px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#questionBox {
+    position: absolute;
+    z-index: 5;
+    top: 75px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255,255,255,.95);
+    color: #182448;
+    padding: 12px 28px;
+    border-radius: 16px;
+    font-size: clamp(22px, 4vw, 32px);
+    font-weight: bold;
+    border: 4px solid #ffe34d;
+    box-shadow: 0 7px 20px rgba(0,0,0,.25);
+    text-align: center;
+    min-width: min(480px, 90vw);
+}
+
+#feedback {
+    position: absolute;
+    z-index: 20;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(.8);
+    padding: 25px 40px;
+    border-radius: 22px;
+    font-size: clamp(25px, 5vw, 45px);
+    font-weight: 900;
+    text-align: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: all .25s;
+}
+
+#feedback.show {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.correct {
+    background: #23d47a;
+    border: 5px solid #a9ffd0;
+}
+
+.incorrect {
+    background: #ef475f;
+    border: 5px solid #ffc0c8;
+}
+
+#tip {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+    background: rgba(13,29,68,.65);
+    border-radius: 12px;
+    padding: 8px 14px;
+    font-size: 14px;
+}
+
+#resultTitle {
+    font-size: clamp(35px, 7vw, 60px);
+    color: #ffe34d;
+    margin-bottom: 15px;
+}
+
+.scoreBig {
+    font-size: clamp(65px, 12vw, 110px);
+    font-weight: 900;
+    text-shadow: 4px 5px 0 #16254a;
+}
+
+.resultMessage {
+    font-size: 22px;
+    margin: 10px 0 30px;
+}
+
+kbd {
+    background: white;
+    color: #17213e;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+@media (max-height: 650px) {
+    #questionBox {
+        top: 60px;
+    }
+
+    #tip {
+        display: none;
+    }
+
+    .panel {
+        padding: 25px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div id="game">
+
+<canvas id="canvas"></canvas>
+
+<!-- HUD -->
+<div id="hud" class="hidden">
+    <div class="hudBox" id="progress">Pregunta 1/10</div>
+    <div class="hudBox" id="score">⭐ Puntos: 0</div>
+</div>
+
+<!-- PREGUNTA -->
+<div id="questionBox" class="hidden"></div>
+
+<!-- AYUDA -->
+<div id="tip" class="hidden">
+    ESPACIO / ↑ / CLIC / TOQUE para volar
+</div>
+
+<!-- FEEDBACK -->
+<div id="feedback"></div>
+
+<!-- INICIO -->
+<div id="startScreen" class="screen overlay">
+    <div class="panel">
+
+        <div class="title">MathFly</div>
+        <div class="subtitle">🚀 Aventura Matemática</div>
+
+        <div class="instructions">
+            Resuelve operaciones matemáticas mientras
+            atraviesas portales mágicos.<br><br>
+
+            🟢 Solo el portal de la respuesta correcta
+            permite pasar.<br><br>
+
+            🎯 Cada acierto = <strong>1 punto</strong><br>
+            🏆 Máximo = <strong>10 puntos</strong>
+        </div>
+
+        <button id="startBtn">▶ JUGAR</button>
+
+    </div>
+</div>
+
+<!-- INSTRUCCIONES -->
+<div id="instructionScreen" class="screen overlay hidden">
+    <div class="panel">
+
+        <h1 style="font-size:40px;color:#ffe34d;margin-bottom:15px;">
+            🎮 ¿Cómo jugar?
+        </h1>
+
+        <div class="instructions">
+            Controla al personaje para hacerlo volar.<br><br>
+
+            Pulsa <kbd>ESPACIO</kbd>, <kbd>↑</kbd>
+            o toca la pantalla para subir.<br><br>
+
+            Encontrarás <strong>4 respuestas</strong>.<br><br>
+
+            🟢 Solo una tiene una abertura para pasar.<br>
+            🔴 Las otras tres están bloqueadas.<br><br>
+
+            ¡Atraviesa la respuesta correcta!
+        </div>
+
+        <button id="readyBtn">
+            🚀 ¡ESTOY LISTO!
+        </button>
+
+    </div>
+</div>
+
+<!-- RESULTADO -->
+<div id="resultScreen" class="screen overlay hidden">
+    <div class="panel">
+
+        <div id="resultTitle">
+            🏆 ¡Aventura completada!
+        </div>
+
+        <div class="scoreBig">
+            <span id="finalScore">0</span>/10
+        </div>
+
+        <div class="resultMessage" id="resultMessage"></div>
+
+        <button id="restartBtn">
+            🔄 JUGAR NUEVAMENTE
+        </button>
+
+    </div>
+</div>
+
+</div>
+
+```html
+<script>
+
+/* =========================================================
+   CONFIGURACIÓN
+========================================================= */
+
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+let W = window.innerWidth;
+let H = window.innerHeight;
+
+function resize() {
+    W = window.innerWidth;
+    H = window.innerHeight;
+
+    canvas.width = W;
+    canvas.height = H;
+}
+
+window.addEventListener("resize", resize);
+resize();
+
+
+/* =========================================================
+   BANCO DE PREGUNTAS
+   40 preguntas fáciles
+========================================================= */
+
+const questionBank = [
+
+    /* SUMAS */
+
+    {
+        text: "3 + 4 = ?",
+        correct: 7,
+        options: [7, 6, 8, 9]
+    },
+
+    {
+        text: "5 + 6 = ?",
+        correct: 11,
+        options: [10, 11, 12, 13]
+    },
+
+    {
+        text: "8 + 7 = ?",
+        correct: 15,
+        options: [13, 14, 15, 16]
+    },
+
+    {
+        text: "9 + 6 = ?",
+        correct: 15,
+        options: [14, 15, 16, 17]
+    },
+
+    {
+        text: "12 + 5 = ?",
+        correct: 17,
+        options: [15, 16, 17, 18]
+    },
+
+    {
+        text: "14 + 3 = ?",
+        correct: 17,
+        options: [16, 17, 18, 19]
+    },
+
+    {
+        text: "10 + 8 = ?",
+        correct: 18,
+        options: [16, 17, 18, 20]
+    },
+
+    {
+        text: "7 + 9 = ?",
+        correct: 16,
+        options: [14, 15, 16, 17]
+    },
+
+    {
+        text: "15 + 4 = ?",
+        correct: 19,
+        options: [17, 18, 19, 20]
+    },
+
+    {
+        text: "11 + 8 = ?",
+        correct: 19,
+        options: [18, 19, 20, 21]
+    },
+
+    /* RESTAS */
+
+    {
+        text: "9 − 4 = ?",
+        correct: 5,
+        options: [4, 5, 6, 7]
+    },
+
+    {
+        text: "10 − 3 = ?",
+        correct: 7,
+        options: [5, 6, 7, 8]
+    },
+
+    {
+        text: "12 − 5 = ?",
+        correct: 7,
+        options: [6, 7, 8, 9]
+    },
+
+    {
+        text: "15 − 6 = ?",
+        correct: 9,
+        options: [7, 8, 9, 10]
+    },
+
+    {
+        text: "18 − 7 = ?",
+        correct: 11,
+        options: [9, 10, 11, 12]
+    },
+
+    {
+        text: "20 − 8 = ?",
+        correct: 12,
+        options: [10, 11, 12, 13]
+    },
+
+    {
+        text: "17 − 9 = ?",
+        correct: 8,
+        options: [6, 7, 8, 9]
+    },
+
+    {
+        text: "16 − 4 = ?",
+        correct: 12,
+        options: [10, 11, 12, 13]
+    },
+
+    {
+        text: "19 − 5 = ?",
+        correct: 14,
+        options: [12, 13, 14, 15]
+    },
+
+    {
+        text: "13 − 6 = ?",
+        correct: 7,
+        options: [5, 6, 7, 8]
+    },
+
+    /* MULTIPLICACIONES */
+
+    {
+        text: "2 × 3 = ?",
+        correct: 6,
+        options: [4, 5, 6, 7]
+    },
+
+    {
+        text: "2 × 4 = ?",
+        correct: 8,
+        options: [6, 7, 8, 9]
+    },
+
+    {
+        text: "3 × 3 = ?",
+        correct: 9,
+        options: [7, 8, 9, 10]
+    },
+
+    {
+        text: "3 × 4 = ?",
+        correct: 12,
+        options: [10, 11, 12, 13]
+    },
+
+    {
+        text: "4 × 4 = ?",
+        correct: 16,
+        options: [14, 15, 16, 17]
+    },
+
+    {
+        text: "5 × 2 = ?",
+        correct: 10,
+        options: [8, 9, 10, 11]
+    },
+
+    {
+        text: "5 × 3 = ?",
+        correct: 15,
+        options: [12, 13, 15, 16]
+    },
+
+    {
+        text: "6 × 2 = ?",
+        correct: 12,
+        options: [10, 11, 12, 14]
+    },
+
+    {
+        text: "6 × 3 = ?",
+        correct: 18,
+        options: [15, 16, 18, 20]
+    },
+
+    {
+        text: "4 × 5 = ?",
+        correct: 20,
+        options: [15, 18, 20, 25]
+    },
+
+    /* DIVISIONES */
+
+    {
+        text: "6 ÷ 2 = ?",
+        correct: 3,
+        options: [2, 3, 4, 5]
+    },
+
+    {
+        text: "8 ÷ 2 = ?",
+        correct: 4,
+        options: [2, 3, 4, 5]
+    },
+
+    {
+        text: "9 ÷ 3 = ?",
+        correct: 3,
+        options: [2, 3, 4, 5]
+    },
+
+    {
+        text: "10 ÷ 2 = ?",
+        correct: 5,
+        options: [3, 4, 5, 6]
+    },
+
+    {
+        text: "12 ÷ 3 = ?",
+        correct: 4,
+        options: [2, 3, 4, 5]
+    },
+
+    {
+        text: "12 ÷ 4 = ?",
+        correct: 3,
+        options: [2, 3, 4, 6]
+    },
+
+    {
+        text: "15 ÷ 3 = ?",
+        correct: 5,
+        options: [3, 4, 5, 6]
+    },
+
+    {
+        text: "16 ÷ 4 = ?",
+        correct: 4,
+        options: [2, 3, 4, 5]
+    },
+
+    {
+        text: "18 ÷ 3 = ?",
+        correct: 6,
+        options: [4, 5, 6, 7]
+    },
+
+    {
+        text: "20 ÷ 4 = ?",
+        correct: 5,
+        options: [3, 4, 5, 6]
+    }
+
+];
+
+
+/* =========================================================
+   PREGUNTAS DE LA PARTIDA ACTUAL
+========================================================= */
+
+/*
+   Aquí se guardarán las 10 preguntas elegidas
+   aleatoriamente para cada partida.
+*/
+
+let gameQuestions = [];
+
+
+/* =========================================================
+   MEZCLAR ARRAY
+========================================================= */
+
+function shuffle(array) {
+
+    const copy = [...array];
+
+    for (
+        let i = copy.length - 1;
+        i > 0;
+        i--
+    ) {
+
+        const j =
+            Math.floor(
+                Math.random() * (i + 1)
+            );
+
+        [
+            copy[i],
+            copy[j]
+        ] =
+        [
+            copy[j],
+            copy[i]
+        ];
+    }
+
+    return copy;
+}
+
+
+/* =========================================================
+   GENERAR LAS 10 PREGUNTAS DE LA PARTIDA
+========================================================= */
+
+function generateGameQuestions() {
+
+    /*
+       Mezclamos TODO el banco.
+
+       Después tomamos solamente las primeras 10.
+
+       De esta manera cada partida tiene
+       10 preguntas diferentes y aleatorias.
+    */
+
+    gameQuestions =
+        shuffle(questionBank)
+        .slice(0, 10);
+
+}
+
+
+/* =========================================================
+   ESTADO DEL JUEGO
+========================================================= */
+
+let currentQuestion = 0;
+let score = 0;
+let playing = false;
+let feedbackActive = false;
+
+let gate = null;
+let clouds = [];
+let particles = [];
+
+
+/* =========================================================
+   PERSONAJE
+========================================================= */
+
+const bird = {
+
+    x: 0,
+    y: 0,
+
+    velocity: 0,
+
+    radius: 21,
+
+    rotation: 0
+
+};
+
+
+/* =========================================================
+   ELEMENTOS HTML
+========================================================= */
+
+const startScreen =
+    document.getElementById("startScreen");
+
+const instructionScreen =
+    document.getElementById("instructionScreen");
+
+const resultScreen =
+    document.getElementById("resultScreen");
+
+const hud =
+    document.getElementById("hud");
+
+const questionBox =
+    document.getElementById("questionBox");
+
+const feedback =
+    document.getElementById("feedback");
+
+const tip =
+    document.getElementById("tip");
+
+const progress =
+    document.getElementById("progress");
+
+const scoreElement =
+    document.getElementById("score");
+
+
+/* =========================================================
+   BOTONES
+========================================================= */
+
+document.getElementById("startBtn")
+.addEventListener("click", () => {
+
+    startScreen.classList.add("hidden");
+
+    instructionScreen.classList.remove("hidden");
+
+});
+
+
+document.getElementById("readyBtn")
+.addEventListener("click", () => {
+
+    instructionScreen.classList.add("hidden");
+
+    startGame();
+
+});
+
+
+document.getElementById("restartBtn")
+.addEventListener("click", () => {
+
+    resultScreen.classList.add("hidden");
+
+    startGame();
+
+});
+
+
+/* =========================================================
+   CONTROLES
+========================================================= */
+
+function fly() {
+
+    if (
+        !playing ||
+        feedbackActive
+    )
+        return;
+
+    bird.velocity = -7.5;
+
+    createParticles(
+        bird.x,
+        bird.y,
+        "#fff36b",
+        4
+    );
+}
+
+
+window.addEventListener("keydown", e => {
+
+    if (
+        e.code === "Space" ||
+        e.code === "ArrowUp"
+    ) {
+
+        e.preventDefault();
+
+        fly();
+
+    }
+
+});
+
+
+canvas.addEventListener(
+    "mousedown",
+    fly
+);
+
+
+canvas.addEventListener(
+    "touchstart",
+    e => {
+
+        e.preventDefault();
+
+        fly();
+
+    },
+    { passive: false }
+);
+
+
+/* =========================================================
+   INICIAR JUEGO
+========================================================= */
+
+function startGame() {
+
+    /*
+       IMPORTANTE:
+
+       Cada vez que comienza una partida
+       generamos 10 preguntas nuevas.
+
+       Por eso la pregunta 1 NO será siempre
+       la misma.
+    */
+
+    generateGameQuestions();
+
+    currentQuestion = 0;
+
+    score = 0;
+
+    playing = true;
+
+    feedbackActive = false;
+
+    hud.classList.remove("hidden");
+
+    questionBox.classList.remove("hidden");
+
+    tip.classList.remove("hidden");
+
+    bird.x = Math.max(
+        110,
+        W * .18
+    );
+
+    bird.y = H / 2;
+
+    bird.velocity = 0;
+
+    particles = [];
+
+    createClouds();
+
+    loadQuestion();
+
+    requestAnimationFrame(gameLoop);
+
+}
+
+
+/* =========================================================
+   CARGAR PREGUNTA
+========================================================= */
+
+function loadQuestion() {
+
+    if (
+        currentQuestion >=
+        gameQuestions.length
+    ) {
+
+        endGame();
+
+        return;
+
+    }
+
+
+    const q =
+        gameQuestions[currentQuestion];
+
+
+    progress.textContent =
+        `Pregunta ${currentQuestion + 1}/10`;
+
+
+    scoreElement.textContent =
+        `⭐ Puntos: ${score}`;
+
+
+    questionBox.textContent =
+        q.text;
+
+
+    createGate(q);
+
+}
+
+
+/* =========================================================
+   CREAR LOS 4 PORTALES
+========================================================= */
+
+function createGate(q) {
+
+    /*
+       Copiamos y mezclamos las cuatro
+       alternativas.
+
+       Esto significa que incluso dentro
+       de la misma pregunta la posición
+       de la respuesta correcta cambia.
+    */
+
+    const answers =
+        shuffle(q.options);
+
+
+    const top = 150;
+
+    const bottom = 55;
+
+    const available =
+        H - top - bottom;
+
+    const laneHeight =
+        available / 4;
+
+    /*
+       Tamaño de la abertura.
+
+       Todas las respuestas tienen el
+       mismo diseño visual.
+
+       Internamente solamente la correcta
+       tendrá espacio para pasar.
+    */
+
+    const gapHeight =
+        Math.min(
+            125,
+            laneHeight * .72
+        );
+
+
+    gate = {
+
+        x: W + 80,
+
+        width: 105,
+
+        answers: [],
+
+        correctAnswer: q.correct,
+
+        evaluated: false
+
+    };
+
+
+    for (
+        let i = 0;
+        i < 4;
+        i++
+    ) {
+
+        const center =
+            top +
+            laneHeight * i +
+            laneHeight / 2;
+
+
+        gate.answers.push({
+
+            value: answers[i],
+
+            /*
+               Esta propiedad solamente
+               existe para la lógica.
+
+               NO se utiliza para cambiar
+               el color de la respuesta.
+            */
+
+            correct:
+                answers[i] === q.correct,
+
+            center: center,
+
+            laneTop:
+                top +
+                laneHeight * i,
+
+            laneBottom:
+                top +
+                laneHeight * (i + 1),
+
+            gapTop:
+                center -
+                gapHeight / 2,
+
+            gapBottom:
+                center +
+                gapHeight / 2
+
+        });
+
+    }
+
+}
+
+
+/* =========================================================
+   NUBES
+========================================================= */
+
+function createClouds() {
+
+    clouds = [];
+
+    for (
+        let i = 0;
+        i < 12;
+        i++
+    ) {
+
+        clouds.push({
+
+            x:
+                Math.random() * W,
+
+            y:
+                40 +
+                Math.random() * H * .45,
+
+            size:
+                25 +
+                Math.random() * 40,
+
+            speed:
+                .15 +
+                Math.random() * .35
+
+        });
+
+    }
+
+}
+
+
+/* =========================================================
+   PARTÍCULAS
+========================================================= */
+
+function createParticles(
+    x,
+    y,
+    color,
+    amount
+) {
+
+    for (
+        let i = 0;
+        i < amount;
+        i++
+    ) {
+
+        particles.push({
+
+            x: x,
+
+            y: y,
+
+            vx:
+                (Math.random() - .5) * 5,
+
+            vy:
+                (Math.random() - .5) * 5,
+
+            life: 1,
+
+            color: color
+
+        });
+
+    }
+
+}
+
+
+/* =========================================================
+   ACTUALIZACIÓN
+========================================================= */
+
+function update() {
+
+    if (
+        !playing ||
+        feedbackActive
+    )
+        return;
+
+
+    /*
+       FÍSICA DEL PERSONAJE
+    */
+
+    bird.velocity += .35;
+
+    bird.y += bird.velocity;
+
+
+    bird.rotation =
+        Math.min(
+            Math.max(
+                bird.velocity * .06,
+                -.3
+            ),
+            .6
+        );
+
+
+    /*
+       LÍMITE SUPERIOR
+    */
+
+    if (
+        bird.y -
+        bird.radius < 0
+    ) {
+
+        bird.y =
+            bird.radius;
+
+        bird.velocity = 0;
+
+    }
+
+
+    /*
+       LÍMITE INFERIOR
+    */
+
+    if (
+        bird.y +
+        bird.radius > H
+    ) {
+
+        bird.y =
+            H - bird.radius;
+
+        bird.velocity = 0;
+
+    }
+
+
+    /*
+       MOVIMIENTO DEL PORTAL
+    */
+
+    if (gate) {
+
+        gate.x -= 3.5;
+
+
+        const collisionX =
+            bird.x + bird.radius >
+                gate.x &&
+            bird.x - bird.radius <
+                gate.x + gate.width;
+
+
+        if (
+            collisionX &&
+            !gate.evaluated
+        ) {
+
+            evaluatePosition();
+
+        }
+
+    }
+
+
+    /*
+       NUBES
+    */
+
+    for (const cloud of clouds) {
+
+        cloud.x -= cloud.speed;
+
+
+        if (
+            cloud.x < -120
+        ) {
+
+            cloud.x =
+                W + 120;
+
+            cloud.y =
+                40 +
+                Math.random() *
+                H * .45;
+
+        }
+
+    }
+
+
+    /*
+       PARTÍCULAS
+    */
+
+    for (
+        let i = particles.length - 1;
+        i >= 0;
+        i--
+    ) {
+
+        const p =
+            particles[i];
+
+        p.x += p.vx;
+
+        p.y += p.vy;
+
+        p.life -= .03;
+
+
+        if (
+            p.life <= 0
+        ) {
+
+            particles.splice(
+                i,
+                1
+            );
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   EVALUAR RESPUESTA
+========================================================= */
+
+function evaluatePosition() {
+
+    if (!gate)
+        return;
+
+
+    let selected = null;
+
+
+    /*
+       Averiguamos en qué carril
+       está el personaje.
+    */
+
+    for (
+        const answer of gate.answers
+    ) {
+
+        if (
+            bird.y >=
+                answer.laneTop &&
+
+            bird.y <=
+                answer.laneBottom
+        ) {
+
+            selected = answer;
+
+            break;
+
+        }
+
+    }
+
+
+    /*
+       Si está entre carriles,
+       no evaluamos todavía.
+    */
+
+    if (!selected)
+        return;
+
+
+    gate.evaluated = true;
+
+    feedbackActive = true;
+
+
+    /*
+       CORRECTA
+    */
+
+    if (
+        selected.correct
+    ) {
+
+        score++;
+
+
+        scoreElement.textContent =
+            `⭐ Puntos: ${score}`;
+
+
+        showFeedback(
+            "✓ ¡CORRECTO! +1",
+            true
+        );
+
+
+        createParticles(
+            bird.x,
+            bird.y,
+            "#75ffad",
+            30
+        );
+
+    }
+
+
+    /*
+       INCORRECTA
+    */
+
+    else {
+
+        showFeedback(
+            `✗ INCORRECTO<br>
+            <small>
+            Correcta: ${gate.correctAnswer}
+            </small>`,
+            false
+        );
+
+
+        createParticles(
+            bird.x,
+            bird.y,
+            "#ff596d",
+            30
+        );
+
+    }
+
+
+    /*
+       SIGUIENTE PREGUNTA
+    */
+
+    setTimeout(() => {
+
+        feedbackActive = false;
+
+        currentQuestion++;
+
+
+        if (
+            currentQuestion >=
+            gameQuestions.length
+        ) {
+
+            endGame();
+
+        }
+
+        else {
+
+            loadQuestion();
+
+        }
+
+    }, 1300);
+
+}
+
+
+/* =========================================================
+   FEEDBACK
+========================================================= */
+
+function showFeedback(
+    text,
+    correct
+) {
+
+    feedback.innerHTML =
+        text;
+
+
+    feedback.className =
+        correct
+        ? "show correct"
+        : "show incorrect";
+
+
+    setTimeout(() => {
+
+        feedback.className = "";
+
+    }, 1100);
+
+}
+
+
+/* =========================================================
+   FINAL
+========================================================= */
+
+function endGame() {
+
+    playing = false;
+
+    feedbackActive = false;
+
+    hud.classList.add(
+        "hidden"
+    );
+
+    questionBox.classList.add(
+        "hidden"
+    );
+
+    tip.classList.add(
+        "hidden"
+    );
+
+
+    document.getElementById(
+        "finalScore"
+    ).textContent = score;
+
+
+    let message;
+
+
+    if (
+        score >= 8
+    ) {
+
+        message =
+            "🌟 ¡Excelente trabajo! Dominas muy bien las operaciones.";
+
+    }
+
+    else if (
+        score >= 5
+    ) {
+
+        message =
+            "👏 ¡Muy bien! Sigue practicando para conseguir 10/10.";
+
+    }
+
+    else {
+
+        message =
+            "💪 ¡Sigue practicando! Cada intento te ayuda a mejorar.";
+
+    }
+
+
+    document.getElementById(
+        "resultMessage"
+    ).textContent =
+        message;
+
+
+    resultScreen.classList.remove(
+        "hidden"
+    );
+
+}
+
+
+/* =========================================================
+   FONDO
+========================================================= */
+
+function drawBackground() {
+
+    const gradient =
+        ctx.createLinearGradient(
+            0,
+            0,
+            0,
+            H
+        );
+
+
+    gradient.addColorStop(
+        0,
+        "#38bdf8"
+    );
+
+    gradient.addColorStop(
+        .65,
+        "#91e5ff"
+    );
+
+    gradient.addColorStop(
+        1,
+        "#d8f8ff"
+    );
+
+
+    ctx.fillStyle =
+        gradient;
+
+
+    ctx.fillRect(
+        0,
+        0,
+        W,
+        H
+    );
+
+
+    /*
+       SOL
+    */
+
+    ctx.beginPath();
+
+    ctx.arc(
+        W - 100,
+        95,
+        45,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fillStyle =
+        "#ffe76a";
+
+    ctx.fill();
+
+
+    /*
+       NUBES
+    */
+
+    for (
+        const cloud of clouds
+    ) {
+
+        ctx.fillStyle =
+            "rgba(255,255,255,.78)";
+
+
+        ctx.beginPath();
+
+
+        ctx.arc(
+            cloud.x,
+            cloud.y,
+            cloud.size,
+            0,
+            Math.PI * 2
+        );
+
+
+        ctx.arc(
+            cloud.x +
+            cloud.size,
+            cloud.y - 10,
+            cloud.size * .75,
+            0,
+            Math.PI * 2
+        );
+
+
+        ctx.arc(
+            cloud.x +
+            cloud.size * 1.7,
+            cloud.y,
+            cloud.size * .85,
+            0,
+            Math.PI * 2
+        );
+
+
+        ctx.fill();
+
+    }
+
+
+    /*
+       MONTAÑAS
+    */
+
+    ctx.fillStyle =
+        "#70b9a0";
+
+
+    ctx.beginPath();
+
+
+    ctx.moveTo(
+        0,
+        H - 120
+    );
+
+
+    for (
+        let x = 0;
+        x <= W;
+        x += 100
+    ) {
+
+        const y =
+            H -
+            120 -
+            Math.sin(
+                x * .01
+            ) * 80;
+
+
+        ctx.lineTo(
+            x,
+            y
+        );
+
+    }
+
+
+    ctx.lineTo(
+        W,
+        H
+    );
+
+    ctx.lineTo(
+        0,
+        H
+    );
+
+
+    ctx.closePath();
+
+    ctx.fill();
+
+
+    /*
+       MONTAÑAS CERCANAS
+    */
+
+    ctx.fillStyle =
+        "#3d9375";
+
+
+    ctx.beginPath();
+
+
+    ctx.moveTo(
+        0,
+        H - 60
+    );
+
+
+    for (
+        let x = 0;
+        x <= W;
+        x += 80
+    ) {
+
+        const y =
+            H -
+            60 -
+            Math.sin(
+                x * .014
+            ) * 55;
+
+
+        ctx.lineTo(
+            x,
+            y
+        );
+
+    }
+
+
+    ctx.lineTo(
+        W,
+        H
+    );
+
+    ctx.lineTo(
+        0,
+        H
+    );
+
+
+    ctx.closePath();
+
+    ctx.fill();
+
+
+    /*
+       SUELO
+    */
+
+    ctx.fillStyle =
+        "#2c714d";
+
+
+    ctx.fillRect(
+        0,
+        H - 28,
+        W,
+        28
+    );
+
+
+    ctx.fillStyle =
+        "#72c850";
+
+
+    ctx.fillRect(
+        0,
+        H - 35,
+        W,
+        10
+    );
+
+}
+
+
+/* =========================================================
+   DIBUJAR LOS 4 PORTALES
+========================================================= */
+
+function drawGate() {
+
+    if (!gate)
+        return;
+
+    for (const answer of gate.answers) {
+
+        drawClosedGate(answer);
+
+        drawAnswerLabel(answer);
+
+    }
+
+}
+/* =========================================================
+   ABERTURA DE LA RESPUESTA CORRECTA
+========================================================= */
+
+function drawOpenGate(
+    answer
+) {
+
+    const x =
+        gate.x;
+
+    const width =
+        gate.width;
+
+
+    /*
+       PARTE SUPERIOR
+    */
+
+    drawBlock(
+        x,
+        answer.laneTop,
+        width,
+        answer.gapTop -
+        answer.laneTop
+    );
+
+
+    /*
+       PARTE INFERIOR
+    */
+
+    drawBlock(
+        x,
+        answer.gapBottom,
+        width,
+        answer.laneBottom -
+        answer.gapBottom
+    );
+
+
+    /*
+       IMPORTANTE:
+
+       No dibujamos borde verde.
+
+       La abertura debe verse igual
+       que el resto del escenario.
+    */
+
+}
+
+
+/* =========================================================
+   PORTAL INCORRECTO
+========================================================= */
+
+function drawClosedGate(
+    answer
+) {
+
+    /*
+       El portal incorrecto está
+       completamente bloqueado.
+    */
+
+    drawBlock(
+        gate.x,
+        answer.laneTop,
+        gate.width,
+        answer.laneBottom -
+        answer.laneTop
+    );
+
+}
+
+
+/* =========================================================
+   BLOQUES
+========================================================= */
+
+function drawBlock(
+    x,
+    y,
+    width,
+    height
+) {
+
+    if (
+        height <= 0
+    )
+        return;
+
+
+    const gradient =
+        ctx.createLinearGradient(
+            x,
+            y,
+            x + width,
+            y
+        );
+
+
+    gradient.addColorStop(
+        0,
+        "#5a36bd"
+    );
+
+    gradient.addColorStop(
+        .5,
+        "#b85ee6"
+    );
+
+    gradient.addColorStop(
+        1,
+        "#542fb1"
+    );
+
+
+    ctx.fillStyle =
+        gradient;
+
+
+    ctx.fillRect(
+        x,
+        y,
+        width,
+        height
+    );
+
+
+    /*
+       BORDE
+    */
+
+    ctx.strokeStyle =
+        "#3c237e";
+
+    ctx.lineWidth = 3;
+
+
+    ctx.strokeRect(
+        x,
+        y,
+        width,
+        height
+    );
+
+
+    /*
+       DECORACIÓN
+    */
+
+    ctx.fillStyle =
+        "#ffe34d";
+
+
+    ctx.fillRect(
+        x + 8,
+        y,
+        width - 16,
+        8
+    );
+
+}
+
+
+/* =========================================================
+   ETIQUETA DE RESPUESTA
+========================================================= */
+
+function drawAnswerLabel(
+    answer
+) {
+
+    const centerX =
+        gate.x +
+        gate.width / 2;
+
+
+    const centerY =
+        answer.center;
+
+
+    /*
+       TODAS LAS RESPUESTAS
+       TIENEN EXACTAMENTE
+       EL MISMO ASPECTO.
+    */
+
+    ctx.fillStyle =
+        "rgba(255,255,255,.95)";
+
+
+    ctx.beginPath();
+
+
+    ctx.roundRect(
+        centerX - 45,
+        centerY - 23,
+        90,
+        46,
+        12
+    );
+
+
+    ctx.fill();
+
+
+    /*
+       MISMO BORDE PARA TODAS
+    */
+
+    ctx.strokeStyle =
+        "#6b4bb5";
+
+    ctx.lineWidth = 4;
+
+
+    ctx.stroke();
+
+
+    /*
+       TEXTO
+    */
+
+    ctx.fillStyle =
+        "#17213e";
+
+
+    ctx.font =
+        "bold 26px Arial";
+
+
+    ctx.textAlign =
+        "center";
+
+
+    ctx.textBaseline =
+        "middle";
+
+
+    ctx.fillText(
+        answer.value,
+        centerX,
+        centerY
+    );
+
+}
+
+
+/* =========================================================
+   PERSONAJE
+========================================================= */
+
+function drawBird() {
+
+    ctx.save();
+
+
+    ctx.translate(
+        bird.x,
+        bird.y
+    );
+
+
+    ctx.rotate(
+        bird.rotation
+    );
+
+
+    /*
+       SOMBRA
+    */
+
+    ctx.beginPath();
+
+
+    ctx.ellipse(
+        0,
+        25,
+        25,
+        8,
+        0,
+        0,
+        Math.PI * 2
+    );
+
+
+    ctx.fillStyle =
+        "rgba(0,0,0,.15)";
+
+
+    ctx.fill();
+
+
+    /*
+       CUERPO
+    */
+
+    ctx.beginPath();
+
+
+    ctx.arc(
+        0,
+        0,
+        bird.radius,
+        0,
+        Math.PI * 2
+    );
+
+
+    ctx.fillStyle =
+        "#ffca3a";
+
+
+    ctx.fill();
+
+
+    ctx.lineWidth = 3;
+
+
+    ctx.strokeStyle =
+        "#e18b20";
+
+
+    ctx.stroke();
+
+
+    /*
+       ALA
+    */
+
+    ctx.beginPath();
+
+
+    ctx.ellipse(
+        -8,
+        7,
+        13,
+        7,
+        -.4,
+        0,
+        Math.PI * 2
+    );
+
+
+    ctx.fillStyle =
+        "#f09b24";
+
+
+    ctx.fill();
+
+
+    /*
+       OJO
+    */
+
+    ctx.beginPath();
+
+
+    ctx.arc(
+        8,
+        -7,
+        6,
+        0,
+        Math.PI * 2
+    );
+
+
+    ctx.fillStyle =
+        "white";
+
+
+    ctx.fill();
+
+
+    ctx.beginPath();
+
+
+    ctx.arc(
+        10,
+        -7,
+        2.5,
+        0,
+        Math.PI * 2
+    );
+
+
+    ctx.fillStyle =
+        "#17213e";
+
+
+    ctx.fill();
+
+
+    /*
+       PICO
+    */
+
+    ctx.beginPath();
+
+
+    ctx.moveTo(
+        19,
+        0
+    );
+
+
+    ctx.lineTo(
+        33,
+        6
+    );
+
+
+    ctx.lineTo(
+        19,
+        11
+    );
+
+
+    ctx.closePath();
+
+
+    ctx.fillStyle =
+        "#f36f32";
+
+
+    ctx.fill();
+
+
+    ctx.restore();
+
+}
+
+
+/* =========================================================
+   PARTÍCULAS
+========================================================= */
+
+function drawParticles() {
+
+    for (
+        const p of particles
+    ) {
+
+        ctx.globalAlpha =
+            p.life;
+
+
+        ctx.fillStyle =
+            p.color;
+
+
+        ctx.beginPath();
+
+
+        ctx.arc(
+            p.x,
+            p.y,
+            4,
+            0,
+            Math.PI * 2
+        );
+
+
+        ctx.fill();
+
+    }
+
+
+    ctx.globalAlpha = 1;
+
+}
+
+
+/* =========================================================
+   LOOP PRINCIPAL
+========================================================= */
+
+function gameLoop() {
+
+    if (!playing)
+        return;
+
+
+    ctx.clearRect(
+        0,
+        0,
+        W,
+        H
+    );
+
+
+    drawBackground();
+
+    update();
+
+    drawGate();
+
+    drawBird();
+
+    drawParticles();
+
+
+    requestAnimationFrame(
+        gameLoop
+    );
+
+}
+
+
+/* =========================================================
+   ANIMACIÓN DE ESPERA
+========================================================= */
+
+function idleAnimation() {
+
+    if (playing)
+        return;
+
+
+    ctx.clearRect(
+        0,
+        0,
+        W,
+        H
+    );
+
+
+    drawBackground();
+
+
+    const oldX =
+        bird.x;
+
+
+    const oldY =
+        bird.y;
+
+
+    bird.x =
+        W / 2;
+
+
+    bird.y =
+        H / 2 +
+        Math.sin(
+            Date.now() * .003
+        ) * 15;
+
+
+    drawBird();
+
+
+    bird.x =
+        oldX;
+
+
+    bird.y =
+        oldY;
+
+
+    requestAnimationFrame(
+        idleAnimation
+    );
+
+}
+
+
+/* =========================================================
+   INICIALIZACIÓN
+========================================================= */
+
+bird.x =
+    W / 2;
+
+bird.y =
+    H / 2;
+
+
+createClouds();
+
+
+idleAnimation();
+
+</script>
+```
+
+</body>
+</html>
+```
