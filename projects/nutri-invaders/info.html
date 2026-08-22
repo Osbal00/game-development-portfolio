@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutri Invaders - Documentacion</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent-color: #22c55e;
+            --accent-hover: #16a34a;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: var(--text-main);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .btn-play {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        .btn-play:hover { background-color: var(--accent-hover); }
+
+        .btn-back {
+            background-color: #475569;
+            color: white;
+        }
+        .btn-back:hover { background-color: #334155; }
+
+        section {
+            margin-bottom: 35px;
+        }
+
+        h2 {
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 8px;
+            margin-top: 40px;
+            color: #60a5fa;
+            font-size: 1.5rem;
+        }
+
+        h3 {
+            color: #38bdf8;
+            margin-top: 20px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .control-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .control-key {
+            display: inline-block;
+            background: #334155;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-weight: bold;
+            color: #f8fafc;
+            margin-bottom: 5px;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .gallery-item p {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 8px;
+        }
+
+        code {
+            background: rgba(15, 23, 42, 0.8);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            color: #f43f5e;
+        }
+
+        pre {
+            background: rgba(15, 23, 42, 0.8);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            overflow-x: auto;
+            font-family: monospace;
+            color: #38bdf8;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Nutri Invaders</h1>
+            <p class="subtitle">Protege los alimentos saludables y elimina la comida chatarra</p>
+            
+            <div class="action-buttons">
+                <a href="./index.html" class="btn btn-play">Jugar Ahora</a>
+                <a href="../info.html" class="btn btn-back">Volver al Catalogo</a>
+            </div>
+        </header>
+
+        <section>
+            <h2>Descripcion</h2>
+            <p><strong>Nutri Invaders</strong> es un videojuego arcade educativo en el que el jugador controla una nave espacial y debe destruir la comida chatarra mientras protege los alimentos saludables.</p>
+            <p>Los alimentos se desplazan horizontalmente en diferentes filas. El jugador debe observarlos, identificar cuáles son poco saludables y disparar únicamente contra ellos.</p>
+            <p>El proyecto combina una mecánica clásica de disparos con contenidos educativos relacionados con nutrición y alimentación saludable.</p>
+        </section>
+
+        <section>
+            <h2>Idea del proyecto</h2>
+            <p>La idea principal de Nutri Invaders es enseñar a diferenciar entre alimentos saludables y comida chatarra mediante una experiencia interactiva.</p>
+            <p>En lugar de responder preguntas directamente, el jugador aprende tomando decisiones durante la partida mediante disparos selectivos, observación y retroalimentación constante.</p>
+        </section>
+
+        <section>
+            <h2>Objetivo del jugador</h2>
+            <p>El objetivo es destruir toda la comida chatarra que aparece en la pantalla sin perder las tres vidas disponibles.</p>
+            <ul>
+                <li>Mover la nave horizontalmente.</li>
+                <li>Observar los alimentos en movimiento.</li>
+                <li>Identificar la comida chatarra.</li>
+                <li>Disparar con precisión y evitar destruir alimentos saludables.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Genero</h2>
+            <ul>
+                <li>Arcade educativo.</li>
+                <li>Shooter 2D.</li>
+                <li>Juego de clasificación.</li>
+                <li>Inspirado en mecánicas clásicas de invasores espaciales.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Mecanica principal y Sistema de Vidas</h2>
+            <p>El jugador controla una nave espacial azul ubicada en la parte inferior de la pantalla mientras los alimentos se desplazan por filas superiores.</p>
+            
+            <h3>Consecuencias al disparar:</h3>
+            <ul>
+                <li><strong>Comida chatarra destruida:</strong> +10 puntos, el alimento desaparece y disminuye el contador restante.</li>
+                <li><strong>Alimento saludable destruido:</strong> -1 vida, aparece una advertencia y la partida termina si las vidas llegan a cero.</li>
+            </ul>
+
+            <p><strong>Vidas iniciales:</strong> 3 vidas.</p>
+        </section>
+
+        <section>
+            <h2>Controles</h2>
+            <div class="controls-grid">
+                <div class="control-card">
+                    <span class="control-key">FLECHA IZQ / A</span>
+                    <p>Mover la nave a la izquierda</p>
+                </div>
+                <div class="control-card">
+                    <span class="control-key">FLECHA DER / D</span>
+                    <p>Mover la nave a la derecha</p>
+                </div>
+                <div class="control-card">
+                    <span class="control-key">ESPACIO</span>
+                    <p>Disparar proyectil</p>
+                </div>
+            </div>
+            <p style="margin-top: 15px; color: var(--text-muted); font-size: 0.9rem;"><em>Nota: También incluye botones integrados en pantalla para dispositivos táctiles.</em></p>
+        </section>
+
+        <section>
+            <h2>Clasificación de Alimentos</h2>
+            <h3>Alimentos saludables (Deben protegerse)</h3>
+            <p>Manzana, brócoli, zanahoria, banana, ensalada, agua.</p>
+            
+            <h3>Comida chatarra (Deben destruirse)</h3>
+            <p>Hamburguesa, papas fritas, dona, pizza, chocolate, dulces, gaseosa.</p>
+        </section>
+
+        <section>
+            <h2>Condiciones de Partida</h2>
+            <p><strong>Condición de victoria:</strong> Eliminar toda la comida chatarra presente en la pantalla (Pantalla: <code>¡GANASTE!</code>).</p>
+            <p><strong>Condición de derrota:</strong> Destruir tres alimentos saludables y quedarse sin vidas (Pantalla: <code>GAME OVER</code>).</p>
+        </section>
+
+        <section>
+            <h2>Capturas de pantalla</h2>
+            <div class="gallery">
+                <div class="gallery-item">
+                    <img src="./screenshots/gameplay.jpg" alt="Gameplay de Nutri Invaders">
+                    <p>Momento de gameplay y acciones</p>
+                </div>
+                <div class="gallery-item">
+                    <img src="./screenshots/fin.jpg" alt="Pantalla final de Nutri Invaders">
+                    <p>Pantalla final de resultados</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Tecnologías utilizadas</h2>
+            <ul>
+                <li>HTML5, CSS3, JavaScript y Canvas 2D.</li>
+                <li>Diseño web adaptable y ejecución directa en navegadores modernos.</li>
+                <li>Control de versiones y publicación mediante GitHub.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Uso de Inteligencia Artificial y Aporte Personal</h2>
+            <p><strong>Apoyo de IA:</strong> Herramienta empleada para estruturar el prototipo inicial mediante prompts definiendo el género arcade, mecánicas de movimiento, control de disparos y reglas de nutrición.</p>
+            <p><strong>Aporte personal:</strong> Revisión de requisitos, evaluación de la temática educativa, comprobación de controles y disparos, pruebas del sistema de vidas y documentación del proyecto.</p>
+        </section>
+
+        <section>
+            <h2>Aprendizajes y Mejoras Futuras</h2>
+            <p><strong>Aprendizajes:</strong> Combinación de mecánicas arcade con objetivos educativos, manejo de colisiones, gestión de Canvas 2D y estructuración de bucles de juego.</p>
+            <p><strong>Mejoras futuras:</strong> Pantallas de inicio y pausa independientes, efectos de sonido y música, información nutricional detallada, niveles de dificultad y optimización de controles táctiles.</p>
+        </section>
+
+        <footer>
+            <p>Nutri Invaders - Desarrollado por Americo Oswaldo Ramirez Rocha para Game Development</p>
+        </footer>
+    </div>
+
+</body>
+</html>
