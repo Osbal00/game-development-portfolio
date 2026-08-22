@@ -1,18 +1,18 @@
-<div align="center">
+<h1 align="center">Americo's Game Development Portfolio</h1>
 
-# Americo's Game Development Portfolio
+<h3 align="center">Ideas, prototipos y experiencias jugables</h3>
 
-### Ideas, prototipos y experiencias jugables
+<p align="center">
+  <img src="https://img.shields.io/badge/Estado-En_desarrollo-FACC15?style=for-the-badge&labelColor=black" alt="Estado">
+  <img src="https://img.shields.io/badge/Área-Game_Development-A855F7?style=for-the-badge&labelColor=black" alt="Área">
+  <img src="https://img.shields.io/badge/Portafolio-Profesional-3B82F6?style=for-the-badge&labelColor=black" alt="Portafolio">
+</p>
 
-![Estado](https://img.shields.io/badge/Estado-En_desarrollo-FACC15?style=for-the-badge&labelColor=black)
-![Área](https://img.shields.io/badge/Área-Game_Development-A855F7?style=for-the-badge&labelColor=black)
-![Portafolio](https://img.shields.io/badge/Portafolio-Profesional-3B82F6?style=for-the-badge&labelColor=black)
-
-<br>
-
-[![Explorar el Portafolio](https://img.shields.io/badge/Explorar_el_Portafolio-22C55E?style=for-the-badge)](./projects/)
-
-</div>
+<p align="center">
+  <a href="./projects/">
+    <img src="https://img.shields.io/badge/Explorar_el_Portafolio-22C55E?style=for-the-badge" alt="Explorar el Portafolio">
+  </a>
+</p>
 
 ---
 
