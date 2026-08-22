@@ -4,7 +4,7 @@
 
 ### Clasifica, recicla y conviértete en un héroe del planeta
 
-![Gameplay de EcoDrop](./screenshotsuego educativo de clasificación de residuos**
+![Gameplay de EcoDrop](./screenshots/gameplay.jpg)
 
 </div>
 
@@ -225,19 +225,19 @@ Esta retroalimentación permite que el jugador aprenda de sus equivocaciones.
 
 La pantalla inicial presenta el nombre del videojuego, las cuatro categorías de reciclaje, los controles y el botón para comenzar.
 
-./screenshots/inicio.jpg
+![incio de EcoDrop](./screenshots/inicio.jpg)
 
 ### Gameplay
 
 Durante la partida, el jugador observa el residuo que está cayendo, las cuatro columnas, los contenedores, la puntuación, el combo y el número de errores.
 
-./screenshots/gameplay.jpg
+![gameplay de EcoDrop](./screenshots/gameplay.jpg)
 
 ### Pantalla final
 
 La pantalla final muestra el resultado de la partida, la puntuación, la cantidad de clasificaciones correctas, los errores y el porcentaje de precisión.
 
-./screenshots/fin.jpg
+![fin de EcoDrop](./screenshots/fin.jpg)
 
 ---
 
