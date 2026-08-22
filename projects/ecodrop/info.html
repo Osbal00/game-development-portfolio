@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoDrop: Clasifica y Recicla - Documentación</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent-color: #22c55e;
+            --accent-hover: #16a34a;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: var(--text-main);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .btn-play {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        .btn-play:hover { background-color: var(--accent-hover); }
+
+        .btn-back {
+            background-color: #475569;
+            color: white;
+        }
+        .btn-back:hover { background-color: #334155; }
+
+        section {
+            margin-bottom: 35px;
+        }
+
+        h2 {
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 8px;
+            margin-top: 40px;
+            color: #60a5fa;
+            font-size: 1.5rem;
+        }
+
+        h3 {
+            color: #38bdf8;
+            margin-top: 20px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .control-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .control-key {
+            display: inline-block;
+            background: #334155;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-weight: bold;
+            color: #f8fafc;
+            margin-bottom: 5px;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .gallery-item p {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 8px;
+        }
+
+        code {
+            background: rgba(15, 23, 42, 0.8);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            color: #f43f5e;
+        }
+
+        pre {
+            background: rgba(15, 23, 42, 0.8);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            overflow-x: auto;
+            font-family: monospace;
+            color: #38bdf8;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>EcoDrop</h1>
+            <p class="subtitle">Clasifica, recicla y conviértete en un héroe del planeta</p>
+            
+            <div class="action-buttons">
+                <!-- Cambia [tu-usuario] y [tu-repositorio] con tus datos reales -->
+                <a href="https://[tu-usuario].github.io/[tu-repositorio]/projects/ecodrop/" class="btn btn-play">Jugar Ahora</a>
+                <a href="../info.html" class="btn btn-back">Volver al Catálogo</a>
+            </div>
+        </header>
+
+        <section>
+            <h2>📖 Descripción</h2>
+            <p><strong>EcoDrop: Clasifica y Recicla</strong> es un videojuego educativo en el que diferentes residuos caen verticalmente por una zona dividida en cuatro columnas.</p>
+            <p>El jugador debe mover cada residuo hacia el contenedor correcto antes de que llegue a la zona de clasificación.</p>
+            <p>El proyecto busca enseñar a identificar y separar correctamente residuos de papel, plástico, vidrio y material orgánico mediante una experiencia rápida, visual e interactiva.</p>
+        </section>
+
+        <section>
+            <h2>💡 Idea del proyecto</h2>
+            <p>La idea principal de EcoDrop es convertir el aprendizaje sobre reciclaje en una actividad basada en reflejos y toma rápida de decisiones.</p>
+            <p>En lugar de presentar únicamente preguntas teóricas, el videojuego permite aprender mediante la clasificación directa de diferentes objetos.</p>
+            <p>Cuando el jugador comete un error, el juego indica cuál era el contenedor correcto para ayudarle a reconocer y recordar la categoría del residuo.</p>
+        </section>
+
+        <section>
+            <h2>🎯 Objetivo del jugador</h2>
+            <p>El objetivo es clasificar correctamente <strong>20 residuos</strong> antes de cometer <strong>5 errores</strong>.</p>
+            <p>Para conseguirlo, el jugador debe:</p>
+            <ul>
+                <li>Observar el residuo que está cayendo.</li>
+                <li>Identificar a qué categoría pertenece.</li>
+                <li>Moverlo hacia la columna correspondiente.</li>
+                <li>Mantener una racha de respuestas correctas.</li>
+                <li>Alcanzar las 20 clasificaciones correctas.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>🧩 Género</h2>
+            <ul>
+                <li>Educativo.</li>
+                <li>Arcade.</li>
+                <li>Juego de reflejos.</li>
+                <li>Clasificación y aprendizaje ambiental.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>⚙️ Mecánica principal</h2>
+            <p>La zona de juego está dividida en cuatro columnas: <strong>Papel, Plástico, Vidrio y Orgánico</strong>.</p>
+            <p>Un residuo aparece en la parte superior y comienza a caer. Mientras desciende, el jugador puede moverlo horizontalmente entre las cuatro columnas.</p>
+            <p>Cuando el residuo llega a la parte inferior, el juego comprueba si se encuentra en el contenedor adecuado.</p>
+            <p>Una clasificación correcta aumenta la puntuación y el combo. Una clasificación incorrecta aumenta el contador de errores y reiniza el combo.</p>
+        </section>
+
+        <section>
+            <h2>🕹️ Controles</h2>
+            <div class="controls-grid">
+                <div class="control-card">
+                    <span class="control-key">FLECHA IZQ / A</span>
+                    <p>Mover el residuo una columna a la izquierda</p>
+                </div>
+                <div class="control-card">
+                    <span class="control-key">FLECHA DER / D</span>
+                    <p>Mover el residuo una columna a la derecha</p>
+                </div>
+            </div>
+            <p style="margin-top: 15px; color: var(--text-muted); font-size: 0.9rem;"><em>Nota: El residuo no puede salir de los límites de las cuatro columnas.</em></p>
+        </section>
+
+        <section>
+            <h2>🗑️ Categorías de reciclaje</h2>
+            <h3>🟦 Papel</h3>
+            <p>Caja de cartón, periódico, hoja de papel.</p>
+            
+            <h3>🟨 Plástico</h3>
+            <p>Botella plástica, bolsa plástica, envase plástico.</p>
+            
+            <h3>🟩 Vidrio</h3>
+            <p>Botella de vidrio, frasco de vidrio.</p>
+            
+            <h3>🟫 Orgánico</h3>
+            <p>Cáscara de plátano, cáscara de manzana, restos de comida.</p>
+        </section>
+
+        <section>
+            <h2>🏆 Sistema de puntuación y combos</h2>
+            <p>El juego incluye puntuación acumulada, número de errores, progreso y un sistema de combos por respuestas correctas consecutivas.</p>
+            <pre>Puntos obtenidos = 100 + combo × 10</pre>
+            <p><strong>Niveles de combo:</strong></p>
+            <ul>
+                <li><code>3x</code>: ¡Racha!</li>
+                <li><code>5x</code>: ¡Reciclador!</li>
+                <li><code>8x</code>: ¡Experto verde!</li>
+                <li><code>12x</code>: ¡Maestro del reciclaje!</li>
+                <li><code>16x</code>: ¡Leyenda Eco!</li>
+                <li><code>20x</code>: ¡Héroe del planeta!</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>📈 Dificultad y Condiciones</h2>
+            <p><strong>Dificultad progresiva:</strong> La velocidad de caída aumenta después de cada clasificación correcta.</p>
+            <p><strong>Condición de victoria:</strong> Clasificar correctamente 20 residuos (Pantalla: <code>¡HÉROE DEL PLANETA!</code>).</p>
+            <p><strong>Condición de derrota:</strong> Alcanzar 5 errores.</p>
+        </section>
+
+        <section>
+            <h2>🖼️ Capturas de pantalla</h2>
+            <div class="gallery">
+                <div class="gallery-item">
+                    <img src="./screenshots/inicio.jpg" alt="Pantalla inicial de EcoDrop">
+                    <p>Pantalla inicial</p>
+                </div>
+                <div class="gallery-item">
+                    <img src="./screenshots/gameplay.jpg" alt="Gameplay de EcoDrop">
+                    <p>Momento de gameplay</p>
+                </div>
+                <div class="gallery-item">
+                    <img src="./screenshots/fin.jpg" alt="Pantalla final de EcoDrop">
+                    <p>Pantalla final</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>🛠️ Tecnologías y Requisitos</h2>
+            <ul>
+                <li>HTML5, CSS3 y JavaScript (diseño web responsivo).</li>
+                <li>Ejecución nativa y directa en cualquier navegador moderno sin instalaciones previas.</li>
+                <li>Control de versiones y publicación mediante Git y GitHub.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>🤖 Uso de Inteligencia Artificial y Aporte Personal</h2>
+            <p><strong>Apoyo de IA:</strong> Utilizada como herramienta para estructurar el prototipo inicial mediante prompts detallados definiendo la mecánica de caída, los combos y las reglas educativas.</p>
+            <p><strong>Aporte personal:</strong> Definición de requisitos, revisión del funcionamiento de los controles, pruebas de sistemas de puntuación, organización en GitHub y redacción de la documentación.</p>
+        </section>
+
+        <section>
+            <h2>📚 Aprendizajes y Mejoras Futuras</h2>
+            <p><strong>Aprendizajes:</strong> Diseño de videojuegos educativos, implementación de bucles de juego, control de eventos en JavaScript y gestión de dificultad progresiva.</p>
+            <p><strong>Mejoras futuras:</strong> Controles táctiles para móviles, efectos de sonido, nuevas categorías de residuos, almacenamiento local de récords y diseño de niveles adicionales.</p>
+        </section>
+
+        <footer>
+            <p>EcoDrop - Desarrollado por Americo Oswaldo Ramirez Rocha para Game Development</p>
+        </footer>
+    </div>
+
+</body>
+</html>
