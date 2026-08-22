@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Ministerio del Invierno - Documentacion</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent-color: #22c55e;
+            --accent-hover: #16a34a;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: var(--text-main);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .btn-play {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        .btn-play:hover { background-color: var(--accent-hover); }
+
+        .btn-back {
+            background-color: #475569;
+            color: white;
+        }
+        .btn-back:hover { background-color: #334155; }
+
+        section {
+            margin-bottom: 35px;
+        }
+
+        h2 {
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 8px;
+            margin-top: 40px;
+            color: #60a5fa;
+            font-size: 1.5rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: rgba(15, 23, 42, 0.4);
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #334155;
+            color: #f8fafc;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .gallery-item p {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 8px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>El Ministerio del Invierno</h1>
+            <p class="subtitle">Simulacion de trabajo y gestion financiera en una ciudad distopica</p>
+            
+            <div class="action-buttons">
+                <a href="./index.html" class="btn btn-play">Jugar Ahora</a>
+                <a href="../info.html" class="btn btn-back">Volver al Catalogo</a>
+            </div>
+        </header>
+
+        <section>
+            <h2>Descripcion</h2>
+            <p><strong>El Ministerio del Invierno</strong> es un videojuego educativo de simulacion y gestion de recursos ambientado en una ciudad distopica afectada por una crisis energetica.</p>
+            <p>El jugador trabaja como analista de creditos y debe procesar solicitudes economicas bajo presion. Al finalizar cada jornada laboral, debe administrar el dinero ganado para cubrir los gastos esenciales de su familia. Cada decision tiene consecuencias.</p>
+        </section>
+
+        <section>
+            <h2>Concepto y Premisa</h2>
+            <p>El juego propone sobrevivir durante 5 dias, mantener a la familia con salud y evitar acumular tres avisos de embargo.</p>
+            <ul>
+                <li><strong>Publico objetivo:</strong> Jovenes (18-25 años).</li>
+                <li><strong>Genero:</strong> Simulacion de trabajo, gestion de recursos, puzle burocratico y estrategia financiera.</li>
+                <li><strong>Enseñanza:</strong> Administracion del dinero, priorizacion de necesidades, presupuesto limitado, costo de oportunidad y planificacion.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Estructura de la Partida</h2>
+            <p>El juego funciona en un ciclo continuo hasta alcanzar la victoria (dia 5) o la derrota:</p>
+            <h3>Fase de Dia: Trabajo de Oficina</h3>
+            <p>El jugador evalua documentos con un tiempo limite de 10 segundos. Debe decidir si aprobar o denegar basandose en la siguiente regla:</p>
+            <p><strong>Regla de Evaluacion (30%):</strong> Monto solicitado ≤ (Ingreso mensual x 0.30)</p>
+            
+            <table>
+                <tr><th>Accion</th><th>Recompensa / Penalizacion</th></tr>
+                <tr><td>Decision Correcta</td><td>+ 20</td></tr>
+                <tr><td>Decision Incorrecta</td><td>- 15</td></tr>
+                <tr><td>Tiempo Agotado</td><td>- 15</td></tr>
+            </table>
+
+            <h3>Fase de Noche: Gestion del Presupuesto</h3>
+            <p>Con el dinero ganado, el jugador debe decidir que gastos cubrir:</p>
+            <table>
+                <tr><th>Gasto</th><th>Costo</th><th>Consecuencia si no se paga</th></tr>
+                <tr><td>Alquiler</td><td>40</td><td>+1 Aviso de embargo</td></tr>
+                <tr><td>Calefaccion</td><td>25</td><td>-35% de Salud familiar</td></tr>
+                <tr><td>Comida</td><td>20</td><td>Temporizador reduce a 7,5s</td></tr>
+            </table>
+        </section>
+
+        <section>
+            <h2>Condiciones de Fin de Partida</h2>
+            <p><strong>Victoria:</strong> Completar los 5 dias con menos de 3 avisos de embargo y salud familiar mayor a 0%.</p>
+            <p><strong>Derrota:</strong> Acumular 3 avisos de embargo o que la salud familiar llegue a 0%.</p>
+        </section>
+
+        <section>
+            <h2>Controles</h2>
+            <p>Jugable con mouse o pantalla tactil:</p>
+            <ul>
+                <li><strong>Dia:</strong> Clic en Aprobar o Denegar.</li>
+                <li><strong>Noche:</strong> Clic en casillas de gastos y boton Pagar y Dormir.</li>
+                <li><strong>Fin:</strong> Clic en Intentar de nuevo.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Capturas de pantalla</h2>
+            <div class="gallery">
+                <div class="gallery-item"><img src="./screenshots/inicio.jpg" alt="Inicio"><p>Pantalla Inicial</p></div>
+                <div class="gallery-item"><img src="./screenshots/gameplay1.jpg" alt="Dia"><p>Fase de Trabajo</p></div>
+                <div class="gallery-item"><img src="./screenshots/gameplay2.jpg" alt="Noche"><p>Gestion Nocturna</p></div>
+                <div class="gallery-item"><img src="./screenshots/fin.jpg" alt="Fin"><p>Pantalla Final</p></div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Tecnologias y Desarrollo</h2>
+            <p>Desarrollado bajo un GDD para planificar mecanicas y progresiones.</p>
+            <ul>
+                <li><strong>Tecnologias:</strong> HTML5, CSS3, JavaScript puro.</li>
+                <li><strong>Despliegue:</strong> Contenido en un unico archivo index.html, ejecucion directa en navegadores modernos.</li>
+                <li><strong>Inteligencia Artificial:</strong> Utilizada como herramienta de apoyo para traducir las mecanicas del GDD a codigo funcional.</li>
+            </ul>
+        </section>
+
+        <footer>
+            <p>El Ministerio del Invierno - Desarrollado por Americo Oswaldo Ramirez Rocha para Game Development</p>
+        </footer>
+    </div>
+
+</body>
+</html>
