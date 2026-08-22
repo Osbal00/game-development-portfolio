@@ -4,7 +4,7 @@
 
 ### ¡Salva el agua!
 
-![gameplay de EcoDrop](.screenshots/inicio.jpg)
+![gameplay de reto-gota](./screenshots/gameplay.jpg)
 
 **Videojuego educativo de minijuegos sobre el cuidado del agua**
 
@@ -328,19 +328,19 @@ El videojuego enseña a:
 
 La pantalla inicial presenta el nombre del juego, el límite de tiempo, el objetivo y el botón para comenzar.
 
-![incio de EcoDrop](.screenshots/inicio.jpg)
+![incio de EcoDrop](./screenshots/inicio.jpg)
 
 ### Gameplay
 
 Durante la partida se muestra uno de los minijuegos, sus instrucciones y los indicadores de puntos, agua ahorrada, tiempo y vidas.
 
-![gameplay de EcoDrop](.screenshots/gameplay.jpg)
+![gameplay de EcoDrop](./screenshots/gameplay.jpg)
 
 ### Pantalla final
 
 La pantalla final muestra la clasificación, la puntuación, los litros ahorrados y las mejores puntuaciones obtenidas.
 
-![fin de EcoDrop](.screenshots/fin.jpg)
+![fin de EcoDrop](./screenshots/fin.jpg)
 
 ---
 
