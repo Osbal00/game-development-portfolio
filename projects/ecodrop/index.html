@@ -1,0 +1,2056 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EcoDrop - Clasifica y Recicla</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+
+            background:
+                radial-gradient(
+                    circle at top,
+                    #16444c,
+                    #061116 75%
+                );
+
+            font-family: Arial, sans-serif;
+            color: white;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+
+        /* ================= JUEGO ================= */
+
+        #game {
+            width: 1000px;
+            max-width: 96vw;
+            height: 720px;
+
+            position: relative;
+            overflow: hidden;
+
+            border: 3px solid #39e58a;
+            border-radius: 22px;
+
+            background:
+                linear-gradient(
+                    #102c35,
+                    #07151b
+                );
+
+            box-shadow:
+                0 0 50px rgba(57,229,138,.2);
+        }
+
+
+        /* ================= HEADER ================= */
+
+        #header {
+            height: 100px;
+
+            padding: 18px 30px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            background: rgba(0,0,0,.25);
+
+            position: relative;
+            z-index: 50;
+        }
+
+        #title {
+            font-size: 32px;
+            font-weight: 900;
+
+            color: #39e58a;
+        }
+
+        #subtitle {
+            margin-top: 5px;
+
+            color: #9eb9c0;
+
+            font-size: 13px;
+        }
+
+        #stats {
+            display: flex;
+
+            gap: 25px;
+
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #86a5ad;
+        }
+
+        .stat-value {
+            font-size: 23px;
+            font-weight: bold;
+        }
+
+        #score {
+            color: #ffd84d;
+        }
+
+        #errors {
+            color: #ff647c;
+        }
+
+
+        /* ================= ÁREA DE JUEGO ================= */
+
+        #playArea {
+            position: absolute;
+
+            top: 100px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+
+            overflow: hidden;
+        }
+
+
+        /* ================= COLUMNAS ================= */
+
+        #columns {
+            position: absolute;
+
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            top: 0;
+            bottom: 145px;
+
+            width: 640px;
+
+            display: flex;
+        }
+
+        .column {
+            width: 160px;
+            height: 100%;
+
+            position: relative;
+
+            border-left:
+                1px solid rgba(255,255,255,.1);
+
+            border-right:
+                1px solid rgba(255,255,255,.1);
+        }
+
+        .column:nth-child(1) {
+            background:
+                rgba(67,151,255,.05);
+        }
+
+        .column:nth-child(2) {
+            background:
+                rgba(255,210,64,.05);
+        }
+
+        .column:nth-child(3) {
+            background:
+                rgba(53,220,117,.05);
+        }
+
+        .column:nth-child(4) {
+            background:
+                rgba(194,139,89,.06);
+        }
+
+
+        /* ================= LÍNEA DE CLASIFICACIÓN ================= */
+
+        #dropLine {
+            position: absolute;
+
+            bottom: 140px;
+
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            width: 640px;
+            height: 5px;
+
+            background: #39e58a;
+
+            box-shadow:
+                0 0 10px #39e58a,
+                0 0 30px rgba(57,229,138,.5);
+
+            z-index: 10;
+        }
+
+
+        /* ================= BASURA ================= */
+
+        #trash {
+            position: absolute;
+
+            width: 100px;
+            height: 75px;
+
+            transform:
+                translateX(-50%);
+
+            top: -100px;
+
+            display: flex;
+
+            justify-content: center;
+            align-items: center;
+
+            text-align: center;
+
+            border-radius: 15px;
+
+            border:
+                3px solid rgba(255,255,255,.5);
+
+            box-shadow:
+                0 10px 25px rgba(0,0,0,.4);
+
+            z-index: 20;
+
+            user-select: none;
+
+            transition:
+                left .08s ease;
+        }
+
+#trash {
+    background: linear-gradient(135deg,#666,#333);
+}
+        #trashEmoji {
+            display: block;
+
+            font-size: 30px;
+        }
+
+        #trashName {
+            display: block;
+
+            font-size: 11px;
+
+            font-weight: bold;
+
+            margin-top: 3px;
+        }
+
+
+        /* ================= COLORES DE RESIDUOS ================= */
+
+        .paper {
+            background:
+                linear-gradient(
+                    135deg,
+                    #397fe8,
+                    #164f9c
+                );
+        }
+
+        .plastic {
+            background:
+                linear-gradient(
+                    135deg,
+                    #e9bc29,
+                    #9a7000
+                );
+        }
+
+        .glass {
+            background:
+                linear-gradient(
+                    135deg,
+                    #29c56c,
+                    #087238
+                );
+        }
+
+        .organic {
+            background:
+                linear-gradient(
+                    135deg,
+                    #ad7045,
+                    #60341e
+                );
+        }
+
+
+        /* ================= CONTENEDORES ================= */
+
+        #bins {
+            position: absolute;
+
+            bottom: 25px;
+
+            left: 50%;
+
+            transform:
+                translateX(-50%);
+
+            width: 640px;
+
+            display: flex;
+
+            z-index: 5;
+        }
+
+        .bin {
+            width: 160px;
+            height: 105px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+            align-items: center;
+
+            border: 3px solid;
+
+            transition:
+                .15s;
+
+            position: relative;
+        }
+
+        .bin-icon {
+            font-size: 32px;
+        }
+
+        .bin-name {
+            margin-top: 5px;
+
+            font-weight: bold;
+
+            font-size: 13px;
+        }
+
+        .bin.correct {
+            transform:
+                translateY(-10px)
+                scale(1.05);
+
+            box-shadow:
+                0 0 30px currentColor;
+        }
+
+        .bin.wrong {
+            animation:
+                shake .25s;
+        }
+
+        @keyframes shake {
+
+            0%,100% {
+                transform:
+                    translateX(0);
+            }
+
+            25% {
+                transform:
+                    translateX(-8px);
+            }
+
+            75% {
+                transform:
+                    translateX(8px);
+            }
+        }
+
+        .bin-paper {
+            color: #4397ff;
+
+            background:
+                rgba(30,90,180,.25);
+        }
+
+        .bin-plastic {
+            color: #ffd240;
+
+            background:
+                rgba(170,130,0,.25);
+        }
+
+        .bin-glass {
+            color: #35dc75;
+
+            background:
+                rgba(20,150,70,.25);
+        }
+
+        .bin-organic {
+            color: #c28b59;
+
+            background:
+                rgba(120,70,35,.3);
+        }
+
+
+        /* ================= COMBO ================= */
+
+        #comboBox {
+            position: absolute;
+
+            top: 25px;
+
+            left: 50%;
+
+            transform:
+                translateX(-50%);
+
+            text-align: center;
+
+            z-index: 30;
+
+            pointer-events: none;
+
+            min-width: 300px;
+        }
+
+        #comboNumber {
+            font-size: 46px;
+
+            line-height: 1;
+
+            font-weight: 900;
+
+            color: #4dc9ff;
+
+            text-shadow:
+                0 0 10px rgba(77,201,255,.8),
+                0 0 25px rgba(77,201,255,.5);
+        }
+
+        #comboName {
+            margin-top: 7px;
+
+            font-size: 17px;
+
+            font-weight: 900;
+
+            letter-spacing: 2px;
+
+            color: #4dc9ff;
+
+            text-shadow:
+                0 0 10px currentColor;
+        }
+
+        #comboBox.combo-pop {
+            animation:
+                comboPop .35s ease;
+        }
+
+        @keyframes comboPop {
+
+            0% {
+                transform:
+                    translateX(-50%)
+                    scale(.7);
+
+                opacity: .5;
+            }
+
+            60% {
+                transform:
+                    translateX(-50%)
+                    scale(1.2);
+
+                opacity: 1;
+            }
+
+            100% {
+                transform:
+                    translateX(-50%)
+                    scale(1);
+            }
+        }
+
+        .combo-low #comboNumber,
+        .combo-low #comboName {
+            color: #4dc9ff;
+        }
+
+        .combo-good #comboNumber,
+        .combo-good #comboName {
+            color: #39e58a;
+        }
+
+        .combo-great #comboNumber,
+        .combo-great #comboName {
+            color: #ffd84d;
+
+            text-shadow:
+                0 0 10px #ffd84d,
+                0 0 30px rgba(255,216,77,.6);
+        }
+
+        .combo-epic #comboNumber,
+        .combo-epic #comboName {
+            color: #ff8c42;
+
+            text-shadow:
+                0 0 10px #ff8c42,
+                0 0 30px rgba(255,140,66,.7);
+        }
+
+        .combo-legend #comboNumber,
+        .combo-legend #comboName {
+            color: #ff4dff;
+
+            text-shadow:
+                0 0 10px #ff4dff,
+                0 0 30px rgba(255,77,255,.8);
+        }
+
+        .combo-hero #comboNumber,
+        .combo-hero #comboName {
+            color: #39e58a;
+
+            text-shadow:
+                0 0 10px #39e58a,
+                0 0 30px #39e58a,
+                0 0 60px rgba(57,229,138,.7);
+        }
+
+        .combo-hero #comboName {
+            font-size: 21px;
+        }
+
+
+        /* ================= FEEDBACK ================= */
+
+        #feedback {
+            position: absolute;
+
+            top: 120px;
+
+            left: 50%;
+
+            transform:
+                translateX(-50%);
+
+            font-size: 28px;
+
+            font-weight: 900;
+
+            z-index: 50;
+
+            opacity: 0;
+        }
+
+        #feedback.show {
+            animation:
+                feedback .7s ease;
+        }
+
+        @keyframes feedback {
+
+            0% {
+                opacity: 0;
+
+                transform:
+                    translate(-50%,20px)
+                    scale(.7);
+            }
+
+            25% {
+                opacity: 1;
+
+                transform:
+                    translate(-50%,0)
+                    scale(1.1);
+            }
+
+            100% {
+                opacity: 0;
+
+                transform:
+                    translate(-50%,-40px);
+            }
+        }
+
+        .good {
+            color: #39e58a;
+        }
+
+        .bad {
+            color: #ff647c;
+        }
+
+
+        /* ================= PROGRESO ================= */
+
+        #progressContainer {
+            position: absolute;
+
+            top: 12px;
+
+            left: 50%;
+
+            transform:
+                translateX(-50%);
+
+            width: 640px;
+
+            height: 5px;
+
+            background:
+                rgba(255,255,255,.1);
+
+            z-index: 40;
+        }
+
+        #progress {
+            height: 100%;
+
+            width: 0%;
+
+            background: #39e58a;
+
+            box-shadow:
+                0 0 10px #39e58a;
+
+            transition:
+                width .3s ease;
+        }
+
+
+        /* ================= CONTROLES ================= */
+
+        #controls {
+            position: absolute;
+
+            bottom: 3px;
+
+            left: 50%;
+
+            transform:
+                translateX(-50%);
+
+            color: #9eb9c0;
+
+            font-size: 12px;
+
+            white-space: nowrap;
+        }
+
+        .key {
+            display: inline-flex;
+
+            justify-content: center;
+            align-items: center;
+
+            width: 30px;
+            height: 25px;
+
+            margin: 0 3px;
+
+            background: #172d35;
+
+            border:
+                1px solid #78919a;
+
+            border-radius: 5px;
+
+            color: white;
+
+            font-weight: bold;
+        }
+
+
+        /* ================= PANTALLAS ================= */
+
+        .screen {
+            position: absolute;
+
+            inset: 0;
+
+            z-index: 100;
+
+            display: flex;
+
+            justify-content: center;
+            align-items: center;
+
+            text-align: center;
+
+            background:
+                radial-gradient(
+                    circle,
+                    #15404a,
+                    #061217 75%
+                );
+        }
+
+        .screen-content {
+            width: 700px;
+
+            max-width: 90%;
+        }
+
+        .logo {
+            font-size: 65px;
+
+            font-weight: 900;
+
+            color: #39e58a;
+
+            text-shadow:
+                0 0 30px rgba(57,229,138,.4);
+        }
+
+        .screen h2 {
+            margin-top: 10px;
+        }
+
+        .screen p {
+            margin-top: 18px;
+
+            line-height: 1.7;
+
+            color: #abc0c6;
+        }
+
+        button {
+            margin-top: 30px;
+
+            padding: 15px 40px;
+
+            border: none;
+
+            border-radius: 12px;
+
+            background: #39e58a;
+
+            color: #052016;
+
+            font-size: 18px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        button:hover {
+            transform:
+                scale(1.04);
+        }
+
+        #resultStats {
+            margin-top: 25px;
+
+            line-height: 2;
+
+            font-size: 18px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 750px) {
+
+            #game {
+                height: 100vh;
+                max-width: 100vw;
+
+                border-radius: 0;
+                border: none;
+            }
+
+            #columns,
+            #bins,
+            #dropLine,
+            #progressContainer {
+                width: 92vw;
+            }
+
+            .column,
+            .bin {
+                width: 23vw;
+            }
+
+            #trash {
+                width: 75px;
+                height: 65px;
+            }
+
+            #title {
+                font-size: 24px;
+            }
+
+            #subtitle {
+                font-size: 10px;
+            }
+
+            #stats {
+                gap: 10px;
+            }
+
+            .stat-value {
+                font-size: 18px;
+            }
+
+            #comboNumber {
+                font-size: 38px;
+            }
+
+            #comboName {
+                font-size: 13px;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+<div id="game">
+
+
+    <!-- ================= PANTALLA DE INICIO ================= -->
+
+    <div id="startScreen" class="screen">
+
+        <div class="screen-content">
+
+            <div class="logo">
+                ♻ EcoDrop
+            </div>
+
+            <h2>
+                Clasifica y Recicla
+            </h2>
+
+            <p>
+                Una basura caerá por una de las cuatro columnas.
+            </p>
+
+            <p>
+                Usa
+                <b>←</b>
+                y
+                <b>→</b>
+                para cambiarla de columna mientras cae.
+            </p>
+
+            <p>
+                Debes colocar cada residuo
+                en el contenedor correspondiente.
+            </p>
+
+            <p>
+                🟦 Papel
+                &nbsp;&nbsp;
+                🟨 Plástico
+                &nbsp;&nbsp;
+                🟩 Vidrio
+                &nbsp;&nbsp;
+                🟫 Orgánico
+            </p>
+
+            <button id="startButton">
+                COMENZAR
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= PANTALLA DE RESULTADO ================= -->
+
+    <div id="resultScreen" class="screen hidden">
+
+        <div class="screen-content">
+
+            <div id="resultTitle" class="logo">
+                🏆 ¡Victoria!
+            </div>
+
+            <div id="resultStats"></div>
+
+            <p id="resultMessage"></p>
+
+            <button id="restartButton">
+                JUGAR DE NUEVO
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= HEADER ================= -->
+
+    <header id="header">
+
+        <div>
+
+            <div id="title">
+                ♻ EcoDrop
+            </div>
+
+            <div id="subtitle">
+                Aprende a separar tus residuos
+            </div>
+
+        </div>
+
+
+        <div id="stats">
+
+            <div class="stat">
+
+                <div class="stat-label">
+                    Puntos
+                </div>
+
+                <div id="score" class="stat-value">
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="stat-label">
+                    Errores
+                </div>
+
+                <div class="stat-value">
+                    <span id="errors">0</span>/5
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- ================= ÁREA DE JUEGO ================= -->
+
+    <main id="playArea">
+
+
+        <!-- ================= COMBO ================= -->
+
+        <div id="comboBox" class="combo-low">
+
+            <div id="comboNumber">
+                0x
+            </div>
+
+            <div id="comboName">
+                COMIENZA A RECICLAR
+            </div>
+
+        </div>
+
+
+        <!-- ================= COLUMNAS ================= -->
+
+        <div id="columns">
+
+            <div class="column"></div>
+
+            <div class="column"></div>
+
+            <div class="column"></div>
+
+            <div class="column"></div>
+
+
+            <!-- BASURA -->
+
+            <div id="trash">
+
+                <div>
+
+                    <span id="trashEmoji">
+                        📦
+                    </span>
+
+                    <span id="trashName">
+                        Caja de cartón
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= LÍNEA ================= -->
+
+        <div id="dropLine"></div>
+
+
+        <!-- ================= CONTENEDORES ================= -->
+
+        <div id="bins">
+
+
+            <div
+                class="bin bin-paper"
+                data-type="paper">
+
+                <div class="bin-icon">
+                    📄
+                </div>
+
+                <div class="bin-name">
+                    PAPEL
+                </div>
+
+            </div>
+
+
+            <div
+                class="bin bin-plastic"
+                data-type="plastic">
+
+                <div class="bin-icon">
+                    🧴
+                </div>
+
+                <div class="bin-name">
+                    PLÁSTICO
+                </div>
+
+            </div>
+
+
+            <div
+                class="bin bin-glass"
+                data-type="glass">
+
+                <div class="bin-icon">
+                    🍾
+                </div>
+
+                <div class="bin-name">
+                    VIDRIO
+                </div>
+
+            </div>
+
+
+            <div
+                class="bin bin-organic"
+                data-type="organic">
+
+                <div class="bin-icon">
+                    🍌
+                </div>
+
+                <div class="bin-name">
+                    ORGÁNICO
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= PROGRESO ================= -->
+
+        <div id="progressContainer">
+
+            <div id="progress"></div>
+
+        </div>
+
+
+        <!-- ================= FEEDBACK ================= -->
+
+        <div id="feedback"></div>
+
+
+        <!-- ================= CONTROLES ================= -->
+
+        <div id="controls">
+
+            Mover:
+
+            <span class="key">←</span>
+
+            <span class="key">→</span>
+
+            o
+
+            <span class="key">A</span>
+
+            <span class="key">D</span>
+
+        </div>
+
+
+    </main>
+
+</div>
+
+
+<script>
+
+
+    /* =====================================================
+       ECO DROP
+       Juego educativo de clasificación de residuos
+    ===================================================== */
+
+
+    /* ================= ELEMENTOS ================= */
+
+    const trash =
+        document.getElementById("trash");
+
+    const trashEmoji =
+        document.getElementById("trashEmoji");
+
+    const trashName =
+        document.getElementById("trashName");
+
+    const bins =
+        document.querySelectorAll(".bin");
+
+    const scoreElement =
+        document.getElementById("score");
+
+    const errorsElement =
+        document.getElementById("errors");
+
+    const progressElement =
+        document.getElementById("progress");
+
+    const feedback =
+        document.getElementById("feedback");
+
+    const startScreen =
+        document.getElementById("startScreen");
+
+    const resultScreen =
+        document.getElementById("resultScreen");
+
+    const resultTitle =
+        document.getElementById("resultTitle");
+
+    const resultStats =
+        document.getElementById("resultStats");
+
+    const resultMessage =
+        document.getElementById("resultMessage");
+
+    const comboBox =
+        document.getElementById("comboBox");
+
+    const comboNumber =
+        document.getElementById("comboNumber");
+
+    const comboName =
+        document.getElementById("comboName");
+
+
+    /* ================= RESIDUOS ================= */
+
+    const trashTypes = [
+
+        {
+            name: "Caja de cartón",
+            emoji: "📦",
+            type: "paper"
+        },
+
+        {
+            name: "Periódico",
+            emoji: "📰",
+            type: "paper"
+        },
+
+        {
+            name: "Hoja de papel",
+            emoji: "📄",
+            type: "paper"
+        },
+
+        {
+            name: "Botella plástica",
+            emoji: "🧴",
+            type: "plastic"
+        },
+
+        {
+            name: "Bolsa plástica",
+            emoji: "🛍️",
+            type: "plastic"
+        },
+
+        {
+            name: "Envase plástico",
+            emoji: "🥤",
+            type: "plastic"
+        },
+
+        {
+            name: "Botella de vidrio",
+            emoji: "🍾",
+            type: "glass"
+        },
+
+        {
+            name: "Frasco de vidrio",
+            emoji: "🫙",
+            type: "glass"
+        },
+
+        {
+            name: "Cáscara de plátano",
+            emoji: "🍌",
+            type: "organic"
+        },
+
+        {
+            name: "Cáscara de manzana",
+            emoji: "🍎",
+            type: "organic"
+        },
+
+        {
+            name: "Restos de comida",
+            emoji: "🍽️",
+            type: "organic"
+        }
+
+    ];
+
+
+    /* ================= VARIABLES ================= */
+
+    const TOTAL_ROUNDS = 20;
+
+    let score = 0;
+
+    let combo = 0;
+
+    let errors = 0;
+
+    let correct = 0;
+
+    let round = 0;
+
+    let gameRunning = false;
+
+    let currentTrash = null;
+
+    let currentColumn = 0;
+
+    let fallSpeed = 0.35;
+
+    let trashY = -100;
+
+    let animationId = null;
+
+    let lastTime = 0;
+
+
+    /* ================= TIPOS ================= */
+
+    const columnTypes = [
+
+        "paper",
+        "plastic",
+        "glass",
+        "organic"
+
+    ];
+
+    const columnNames = [
+
+        "Papel",
+        "Plástico",
+        "Vidrio",
+        "Orgánico"
+
+    ];
+
+
+    /* ================= INICIAR ================= */
+
+    function startGame() {
+
+        startScreen.classList.add("hidden");
+
+        resultScreen.classList.add("hidden");
+
+
+        score = 0;
+
+        combo = 0;
+
+        errors = 0;
+
+        correct = 0;
+
+        round = 0;
+
+
+        fallSpeed = 0.20;
+
+        gameRunning = true;
+
+
+        updateStats();
+
+        createTrash();
+
+
+        lastTime =
+            performance.now();
+
+
+        cancelAnimationFrame(animationId);
+
+
+        animationId =
+            requestAnimationFrame(gameLoop);
+
+    }
+
+
+    /* ================= CREAR BASURA ================= */
+
+    function createTrash() {
+
+        currentTrash =
+            trashTypes[
+                Math.floor(
+                    Math.random() *
+                    trashTypes.length
+                )
+            ];
+
+
+        /*
+            La basura empieza
+            en una columna aleatoria.
+        */
+
+        currentColumn =
+            Math.floor(
+                Math.random() * 4
+            );
+
+
+        trashY = -100;
+
+
+        trashEmoji.textContent =
+            currentTrash.emoji;
+
+        trashName.textContent =
+            currentTrash.name;
+
+
+        /*
+            Aplicamos el color
+            correspondiente al residuo.
+        */
+
+        trash.className = "";
+
+
+        updateTrash();
+
+    }
+
+
+    /* ================= ACTUALIZAR POSICIÓN ================= */
+
+    function updateTrash() {
+
+        /*
+            Las cuatro columnas ocupan:
+
+            12.5%
+            37.5%
+            62.5%
+            87.5%
+        */
+
+        const positions = [
+
+            12.5,
+            37.5,
+            62.5,
+            87.5
+
+        ];
+
+
+        trash.style.left =
+            positions[currentColumn] + "%";
+
+
+        trash.style.top =
+            trashY + "px";
+
+    }
+
+
+    /* ================= BUCLE DEL JUEGO ================= */
+
+    function gameLoop(timestamp) {
+
+        if (!gameRunning) {
+            return;
+        }
+
+
+        const delta =
+            timestamp - lastTime;
+
+
+        lastTime =
+            timestamp;
+
+
+        /*
+            Mover la basura
+            hacia abajo.
+        */
+
+        trashY +=
+            fallSpeed * delta;
+
+
+        updateTrash();
+
+
+        /*
+            La basura llega
+            a la zona de clasificación.
+        */
+
+        if (trashY >= 410) {
+
+            evaluate();
+
+            return;
+        }
+
+
+        animationId =
+            requestAnimationFrame(gameLoop);
+
+    }
+
+
+    /* ================= CONTROLES ================= */
+
+    document.addEventListener(
+        "keydown",
+        function(event) {
+
+            if (!gameRunning) {
+                return;
+            }
+
+
+            const key =
+                event.key.toLowerCase();
+
+
+            if (
+                key === "arrowleft" ||
+                key === "a"
+            ) {
+
+                moveColumn(-1);
+
+                event.preventDefault();
+
+            }
+
+
+            if (
+                key === "arrowright" ||
+                key === "d"
+            ) {
+
+                moveColumn(1);
+
+                event.preventDefault();
+
+            }
+
+        }
+    );
+
+
+    /* ================= CAMBIAR COLUMNA ================= */
+
+    function moveColumn(direction) {
+
+        currentColumn +=
+            direction;
+
+
+        /*
+            No permitir salir
+            de las cuatro columnas.
+        */
+
+        if (currentColumn < 0) {
+
+            currentColumn = 0;
+
+        }
+
+
+        if (currentColumn > 3) {
+
+            currentColumn = 3;
+
+        }
+
+
+        updateTrash();
+
+
+        /*
+            Pequeño efecto visual.
+        */
+
+        trash.style.transform =
+            "translateX(-50%) scale(1.08)";
+
+
+        setTimeout(
+            function() {
+
+                trash.style.transform =
+                    "translateX(-50%) scale(1)";
+
+            },
+            80
+        );
+
+    }
+
+
+    /* ================= EVALUAR ================= */
+
+    function evaluate() {
+
+        const selectedType =
+            columnTypes[currentColumn];
+
+
+        if (
+            selectedType ===
+            currentTrash.type
+        ) {
+
+            correctAnswer();
+
+        } else {
+
+            wrongAnswer();
+
+        }
+
+    }
+
+
+    /* ================= RESPUESTA CORRECTA ================= */
+
+    function correctAnswer() {
+
+        correct++;
+
+        combo++;
+
+
+        /*
+            Mientras mayor sea
+            el combo, más puntos.
+        */
+
+        const points =
+            100 + combo * 10;
+
+
+        score += points;
+
+
+        /*
+            Animar contenedor.
+        */
+
+        const bin =
+            bins[currentColumn];
+
+
+        bin.classList.add("correct");
+
+
+        setTimeout(
+            function() {
+
+                bin.classList.remove("correct");
+
+            },
+            400
+        );
+
+
+        showFeedback(
+            "♻ ¡Correcto! +" + points,
+            true
+        );
+
+
+        updateStats();
+
+
+        round++;
+
+
+        /*
+            La basura cae cada vez
+            más rápido.
+        */
+
+        fallSpeed += 0.015;
+
+
+        /*
+            Victoria después
+            de 20 clasificaciones correctas.
+        */
+
+        if (correct >= TOTAL_ROUNDS) {
+
+            finishGame(true);
+
+            return;
+
+        }
+
+
+        setTimeout(
+            function() {
+
+                createTrash();
+
+                lastTime =
+                    performance.now();
+
+                animationId =
+                    requestAnimationFrame(gameLoop);
+
+            },
+            450
+        );
+
+    }
+
+
+    /* ================= RESPUESTA INCORRECTA ================= */
+
+    function wrongAnswer() {
+
+        errors++;
+
+        /*
+            Un error rompe
+            el combo.
+        */
+
+        combo = 0;
+
+
+        const bin =
+            bins[currentColumn];
+
+
+        bin.classList.add("wrong");
+
+
+        setTimeout(
+            function() {
+
+                bin.classList.remove("wrong");
+
+            },
+            300
+        );
+
+
+        const correctColumn =
+            columnNames[
+                columnTypes.indexOf(
+                    currentTrash.type
+                )
+            ];
+
+
+        showFeedback(
+            "❌ Incorrecto → " +
+            correctColumn,
+            false
+        );
+
+
+        updateStats();
+
+
+        round++;
+
+
+        /*
+            Si llega a 5 errores,
+            termina la partida.
+        */
+
+        if (errors >= 5) {
+
+            finishGame(false);
+
+            return;
+
+        }
+
+
+        setTimeout(
+            function() {
+
+                createTrash();
+
+                lastTime =
+                    performance.now();
+
+                animationId =
+                    requestAnimationFrame(gameLoop);
+
+            },
+            850
+        );
+
+    }
+
+
+    /* ================= FEEDBACK ================= */
+
+    function showFeedback(
+        message,
+        good
+    ) {
+
+        feedback.textContent =
+            message;
+
+
+        feedback.className =
+            good
+                ? "good"
+                : "bad";
+
+
+        /*
+            Reiniciar animación.
+        */
+
+        void feedback.offsetWidth;
+
+
+        feedback.classList.add("show");
+
+
+        setTimeout(
+            function() {
+
+                feedback.classList.remove(
+                    "show"
+                );
+
+            },
+            700
+        );
+
+    }
+
+
+    /* ================= ESTADÍSTICAS ================= */
+
+    function updateStats() {
+
+        scoreElement.textContent =
+            score;
+
+
+        errorsElement.textContent =
+            errors;
+
+
+        progressElement.style.width =
+            Math.min(
+                (correct / TOTAL_ROUNDS) * 100,
+                100
+            ) + "%";
+
+
+        /*
+            ============================
+            SISTEMA DE COMBOS
+            ============================
+        */
+
+        comboNumber.textContent =
+            combo + "x";
+
+
+        let name =
+            "COMIENZA A RECICLAR";
+
+
+        let level =
+            "combo-low";
+
+
+        if (combo >= 3 && combo < 5) {
+
+            name =
+                "⚡ ¡RACHA!";
+
+            level =
+                "combo-good";
+
+        }
+
+        else if (combo >= 5 && combo < 8) {
+
+            name =
+                "🔥 ¡RECICLADOR!";
+
+            level =
+                "combo-good";
+
+        }
+
+        else if (combo >= 8 && combo < 12) {
+
+            name =
+                "💥 ¡EXPERTO VERDE!";
+
+            level =
+                "combo-great";
+
+        }
+
+        else if (combo >= 12 && combo < 16) {
+
+            name =
+                "🌟 ¡MAESTRO DEL RECICLAJE!";
+
+            level =
+                "combo-epic";
+
+        }
+
+        else if (combo >= 16 && combo < 20) {
+
+            name =
+                "👑 ¡LEYENDA ECO!";
+
+            level =
+                "combo-legend";
+
+        }
+
+        else if (combo >= 20) {
+
+            name =
+                "♻️ ¡HÉROE DEL PLANETA!";
+
+            level =
+                "combo-hero";
+
+        }
+
+
+        comboName.textContent =
+            name;
+
+
+        comboBox.className =
+            level;
+
+
+        /*
+            Animación del combo.
+        */
+
+        if (combo > 0) {
+
+            comboBox.classList.remove(
+                "combo-pop"
+            );
+
+
+            void comboBox.offsetWidth;
+
+
+            comboBox.classList.add(
+                "combo-pop"
+            );
+
+        }
+
+    }
+
+
+    /* ================= FINAL ================= */
+
+    function finishGame(won) {
+
+        gameRunning = false;
+
+
+        cancelAnimationFrame(
+            animationId
+        );
+
+
+        if (won) {
+
+            resultTitle.textContent =
+                "🏆 ¡HÉROE DEL PLANETA!";
+
+
+            resultTitle.style.color =
+                "#39e58a";
+
+
+            resultMessage.textContent =
+                "¡Excelente trabajo! Has demostrado que sabes clasificar correctamente los residuos.";
+
+        }
+
+        else {
+
+            resultTitle.textContent =
+                "🌱 ¡SIGUE PRACTICANDO!";
+
+
+            resultTitle.style.color =
+                "#ff647c";
+
+
+            resultMessage.textContent =
+                "No te preocupes. Observa el tipo de residuo y recuerda en qué contenedor debe colocarse.";
+
+        }
+
+
+        const attempts =
+            correct + errors;
+
+
+        const accuracy =
+            attempts === 0
+                ? 0
+                : Math.round(
+                    correct /
+                    attempts *
+                    100
+                );
+
+
+        resultStats.innerHTML = `
+
+            <div>
+                ⭐ Puntaje:
+                <b>${score}</b>
+            </div>
+
+            <div>
+                ♻ Correctos:
+                <b>${correct}</b>
+            </div>
+
+            <div>
+                ❌ Errores:
+                <b>${errors}</b>
+            </div>
+
+            <div>
+                📊 Precisión:
+                <b>${accuracy}%</b>
+            </div>
+
+        `;
+
+
+        resultScreen.classList.remove(
+            "hidden"
+        );
+
+    }
+
+
+    /* ================= BOTONES ================= */
+
+    document
+        .getElementById("startButton")
+        .addEventListener(
+            "click",
+            startGame
+        );
+
+
+    document
+        .getElementById("restartButton")
+        .addEventListener(
+            "click",
+            startGame
+        );
+
+
+</script>
+
+</body>
+</html>
