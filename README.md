@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./assets/banner.svg" alt="Americo's Game Development Portfolio">
+  <img src="./projects/assets/gemini-svg.svg" alt="Americo's Game Development Portfolio">
 </p>
 
 <p align="center">
@@ -22,7 +22,7 @@
 | Asignatura | Game Development |
 | Tipo | Portafolio de videojuegos |
 | Proyectos | 5 prototipos funcionales |
-| Catálogo visual | [Ver Directorio HTML](./info.html) *(o la ruta donde ubiques tu archivo)* |
+| Catálogo visual | [Ver Directorio HTML](./projects/info.html) *(o la ruta donde ubiques tu archivo)* |
 | Publicación | GitHub Pages |
 | Autor | Ing. Americo Oswaldo Ramirez Rocha |
 
