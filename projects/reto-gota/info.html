@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reto Gota: Salva el Agua - Documentacion</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent-color: #22c55e;
+            --accent-hover: #16a34a;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: var(--text-main);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .btn-play {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        .btn-play:hover { background-color: var(--accent-hover); }
+
+        .btn-back {
+            background-color: #475569;
+            color: white;
+        }
+        .btn-back:hover { background-color: #334155; }
+
+        section {
+            margin-bottom: 35px;
+        }
+
+        h2 {
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 8px;
+            margin-top: 40px;
+            color: #60a5fa;
+            font-size: 1.5rem;
+        }
+
+        h3 {
+            color: #38bdf8;
+            margin-top: 20px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .control-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .control-key {
+            display: inline-block;
+            background: #334155;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-weight: bold;
+            color: #f8fafc;
+            margin-bottom: 5px;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .gallery-item p {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 8px;
+        }
+
+        code {
+            background: rgba(15, 23, 42, 0.8);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            color: #f43f5e;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Reto Gota</h1>
+            <p class="subtitle">¡Salva el agua! Videojuego educativo de minijuegos</p>
+            
+            <div class="action-buttons">
+                <a href="./index.html" class="btn btn-play">Jugar Ahora</a>
+                <a href="../info.html" class="btn btn-back">Volver al Catalogo</a>
+            </div>
+        </header>
+
+        <section>
+            <h2>Descripcion</h2>
+            <p><strong>Reto Gota: Salva el Agua</strong> es un videojuego educativo compuesto por diferentes minijuegos relacionados con el ahorro y el uso responsable del agua.</p>
+            <p>El jugador dispone de 60 segundos y tres vidas para completar la mayor cantidad posible de desafíos relacionados con cerrar llaves, reparar fugas, controlar el tiempo de ducha, recolectar lluvia y reconocer hábitos responsables.</p>
+        </section>
+
+        <section>
+            <h2>Idea del proyecto e Idea Principal</h2>
+            <p>El propósito es enseñar hábitos de cuidado del agua mediante desafíos breves, variados e interactivos, permitiendo practicar acciones orientadas a evitar el desperdicio y reutilizar el recurso dentro de una misma partida dinámica.</p>
+        </section>
+
+        <section>
+            <h2>Objetivo del jugador</h2>
+            <p>Completar tantos minijuegos como sea posible antes de que termine el tiempo o se pierdan las tres vidas, maximizando la puntuación y la cantidad de agua ahorrada.</p>
+        </section>
+
+        <section>
+            <h2>Genero</h2>
+            <ul>
+                <li>Educativo.</li>
+                <li>Arcade.</li>
+                <li>Colección de minijuegos.</li>
+                <li>Juego de habilidad y reflejos.</li>
+                <li>Simulación de hábitos responsables.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Mecanica principal y Tiempo</h2>
+            <p>La partida tiene una duración máxima de <strong>60 segundos</strong>. Durante este tiempo aparecen minijuegos seleccionados de forma aleatoria, cada uno con su propio límite de tiempo, instrucciones y penalización si no se completa correctamente.</p>
+        </section>
+
+        <section>
+            <h2>Controles</h2>
+            <div class="controls-grid">
+                <div class="control-card">
+                    <span class="control-key">CLIC / SELECCIONAR</span>
+                    <p>Interactuar con llaves, fugas, gotas y botones</p>
+                </div>
+                <div class="control-card">
+                    <span class="control-key">MANTENER / ARRASTRAR</span>
+                    <p>Abrir grifos, posicionar parches o mover barriles</p>
+                </div>
+            </div>
+            <p style="margin-top: 15px; color: var(--text-muted); font-size: 0.9rem;"><em>Nota: Totalmente compatible con pantallas táctiles y paneles de control web.</em></p>
+        </section>
+
+        <section>
+            <h2>Minijuegos incluidos</h2>
+            <ul>
+                <li><strong>Cierra todas las llaves:</strong> Haz clic sobre las llaves abiertas para cerrarlas.</li>
+                <li><strong>Conecta las tuberías:</strong> Rota las piezas para crear un recorrido continuo.</li>
+                <li><strong>Repara las fugas:</strong> Cierra cuatro fugas antes de alcanzar el límite de pérdida.</li>
+                <li><strong>Llena el balde:</strong> Mantén presionado y suelta cuando esté entre 80% y 100%.</li>
+                <li><strong>Controla la ducha:</strong> Cierra el agua cuando el tiempo esté entre tres y seis segundos.</li>
+                <li><strong>Sella la tubería:</strong> Arrastra un parche al lugar correcto de la fuga.</li>
+                <li><strong>Atrapa el agua:</strong> Selecciona las gotas antes de que toquen el suelo.</li>
+                <li><strong>Regula la presión:</strong> Mueve la válvula para ubicar el indicador entre 40% y 60%.</li>
+                <li><strong>Riega las plantas:</strong> Riega cuando el indicador esté en la zona verde.</li>
+                <li><strong>Buenos hábitos del agua:</strong> Selecciona solo las acciones que ahorran agua.</li>
+                <li><strong>Recolecta agua de lluvia:</strong> Arrastra un barril para atrapar las gotas.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Sistemas de Puntuación, Agua y Vidas</h2>
+            <p><strong>Puntuación y Agua Ahorrada:</strong> Cada minijuego otorga puntos específicos y litros de agua ahorrados (por ejemplo, cerrar llaves otorga 100 puntos y ahorra 10 litros).</p>
+            <p><strong>Vidas:</strong> El jugador comienza con <strong>3 vidas</strong>. Se pierde una vida al fallar un reto, exceder el tiempo o cometer errores.</p>
+        </section>
+
+        <section>
+            <h2>Evaluación Final y Clasificación</h2>
+            <ul>
+                <li><strong>Guardián del Agua:</strong> 2000 puntos o más (¡Excelente trabajo!).</li>
+                <li><strong>Muy buen trabajo:</strong> Entre 1000 y 1999 puntos.</li>
+                <li><strong>Inténtalo de nuevo:</strong> Menos de 1000 puntos.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Capturas de pantalla</h2>
+            <div class="gallery">
+                <div class="gallery-item">
+                    <img src="./screenshots/inicio.jpg" alt="Pantalla inicial de Reto Gota">
+                    <p>Pantalla inicial</p>
+                </div>
+                <div class="gallery-item">
+                    <img src="./screenshots/gameplay.jpg" alt="Gameplay de Reto Gota">
+                    <p>Minijuego en curso</p>
+                </div>
+                <div class="gallery-item">
+                    <img src="./screenshots/fin.jpg" alt="Pantalla final de Reto Gota">
+                    <p>Pantalla de resultados</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Tecnologías utilizadas</h2>
+            <ul>
+                <li>HTML5, CSS3, JavaScript y Manipulación del DOM.</li>
+                <li>Eventos de mouse, puntero y diseño adaptable.</li>
+                <li>Control de versiones y publicación en GitHub.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Uso de Inteligencia Artificial y Aporte Personal</h2>
+            <p><strong>Apoyo de IA:</strong> Utilizada como herramienta para proponer la estructura general del juego, organizar los minijuegos, desarrollar interacciones y estructurar sistemas de tiempo, puntos y vidas.</p>
+            <p><strong>Aporte personal:</strong> Selección de la temática educativa, revisión de mecánicas, pruebas de minijuegos, verificación de puntuaciones y litros ahorrados, organización en GitHub y documentación.</p>
+        </section>
+
+        <section>
+            <h2>Aprendizajes y Mejoras Futuras</h2>
+            <p><strong>Aprendizajes:</strong> Integración de múltiples minijuegos en un solo proyecto, gestión de límites de tiempo, sistemas de vidas y creación de experiencias interactivas variadas.</p>
+            <p><strong>Mejoras futuras:</strong> Música y efectos de sonido, personalización del nombre del usuario, almacenamiento permanente del ranking, optimización táctil y expansión de minijuegos.</p>
+        </section>
+
+        <footer>
+            <p>Reto Gota - Desarrollado por Americo Oswaldo Ramirez Rocha para Game Development</p>
+        </footer>
+    </div>
+
+</body>
+</html>
