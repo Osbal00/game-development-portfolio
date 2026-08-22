@@ -4,7 +4,7 @@
 
 ### Una historia interactiva contada desde dos pantallas
 
-![Gameplay de Detrás del Muro](./screenshots/gameplay.png)
+![Gameplay de Detrás del Muro](./screenshots/gameplay1.png)
 
 </div>
 
