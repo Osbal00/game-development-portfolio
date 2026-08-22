@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathBirds - Documentacion</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent-color: #22c55e;
+            --accent-hover: #16a34a;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: var(--text-main);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .btn-play {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        .btn-play:hover { background-color: var(--accent-hover); }
+
+        .btn-back {
+            background-color: #475569;
+            color: white;
+        }
+        .btn-back:hover { background-color: #334155; }
+
+        section {
+            margin-bottom: 35px;
+        }
+
+        h2 {
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 8px;
+            margin-top: 40px;
+            color: #60a5fa;
+            font-size: 1.5rem;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .control-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .control-key {
+            display: inline-block;
+            background: #334155;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-weight: bold;
+            color: #f8fafc;
+            margin-bottom: 5px;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .gallery-item p {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 8px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>MathBirds</h1>
+            <p class="subtitle">Aventura matemática educativa</p>
+            
+            <div class="action-buttons">
+                <a href="./index.html" class="btn btn-play">Jugar Ahora</a>
+                <a href="../info.html" class="btn btn-back">Volver al Catálogo</a>
+            </div>
+        </header>
+
+        <section>
+            <h2>Descripcion</h2>
+            <p><strong>MathBirds</strong> es un videojuego educativo 2D en el que el jugador controla un personaje volador mientras resuelve operaciones matemáticas.</p>
+            <p>Durante cada partida se presentan 10 preguntas. Para responder, el jugador debe mover al personaje verticalmente y atravesar la opción que considere correcta.</p>
+            <p>El proyecto combina el aprendizaje de matemáticas con una mecánica arcade de desplazamiento lateral.</p>
+        </section>
+
+        <section>
+            <h2>Objetivo del jugador</h2>
+            <p>El objetivo es resolver correctamente las 10 operaciones matemáticas y obtener la mayor puntuación posible.</p>
+            <p>Cada respuesta correcta otorga 1 punto y la puntuación máxima es de 10 puntos.</p>
+        </section>
+
+        <section>
+            <h2>Genero</h2>
+            <ul>
+                <li>Videojuego educativo.</li>
+                <li>Aventura 2D.</li>
+                <li>Arcade.</li>
+                <li>Inspirado en mecánicas de desplazamiento lateral.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Mecanica principal</h2>
+            <p>El personaje avanza mientras el jugador controla su movimiento vertical.</p>
+            <p>En cada pregunta aparecen cuatro posibles respuestas. El jugador debe posicionar al personaje en el carril de la respuesta que considera correcta.</p>
+            <p>El juego informa si la respuesta fue correcta o incorrecta y continúa con la siguiente pregunta.</p>
+        </section>
+
+        <section>
+            <h2>Controles</h2>
+            <div class="controls-grid">
+                <div class="control-card">
+                    <span class="control-key">ESPACIO / FLECHA ARRIBA</span>
+                    <p>Impulsar al personaje hacia arriba</p>
+                </div>
+                <div class="control-card">
+                    <span class="control-key">CLIC / TACTIL</span>
+                    <p>Impulsar al personaje mediante mouse o pantalla</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Contenido matematico</h2>
+            <p>El juego contiene ejercicios de:</p>
+            <ul>
+                <li>Suma.</li>
+                <li>Resta.</li>
+                <li>Multiplicación.</li>
+                <li>División.</li>
+            </ul>
+            <p>Cada partida selecciona 10 preguntas y presenta cuatro alternativas por pregunta.</p>
+        </section>
+
+        <section>
+            <h2>Sistema de puntuacion</h2>
+            <ul>
+                <li>Respuesta correcta: 1 punto.</li>
+                <li>Respuesta incorrecta: 0 puntos.</li>
+                <li>Puntuación máxima: 10 puntos.</li>
+                <li>Al terminar aparece un mensaje de acuerdo con el desempeño.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Capturas de pantalla</h2>
+            <div class="gallery">
+                <div class="gallery-item">
+                    <img src="./screenshots/inicio_mathfly.jpg" alt="Pantalla inicial de MathBirds">
+                    <p>Pantalla inicial</p>
+                </div>
+                <div class="gallery-item">
+                    <img src="./screenshots/gameplay.jpg" alt="Gameplay de MathBirds">
+                    <p>Momento de gameplay</p>
+                </div>
+                <div class="gallery-item">
+                    <img src="./screenshots/fin.jpg" alt="Pantalla final de MathBirds">
+                    <p>Resultado final</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Tecnologías utilizadas</h2>
+            <ul>
+                <li>HTML5, CSS3, JavaScript y Canvas 2D.</li>
+                <li>Ejecución directa en navegador web sin instalaciones previas.</li>
+                <li>Control de versiones y publicación mediante GitHub.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Uso de Inteligencia Artificial y Aporte Personal</h2>
+            <p><strong>Apoyo de IA:</strong> Utilizada como herramienta para estructurar el prototipo inicial mediante prompts detallados definiendo el objetivo educativo, la mecánica principal y las operaciones matemáticas.</p>
+            <p><strong>Aporte personal:</strong> Definición de requisitos, evaluación del funcionamiento del videojuego, pruebas de preguntas y respuestas, comprobación del sistema de puntuación, organización en GitHub y redacción de la documentación.</p>
+        </section>
+
+        <section>
+            <h2>Aprendizajes y Mejoras Futuras</h2>
+            <p><strong>Aprendizajes:</strong> Definición de requisitos para un videojuego educativo, diseño de mecánicas basadas en preguntas y respuestas, uso de prompts para prototipado y pruebas de ejecución.</p>
+            <p><strong>Mejoras futuras:</strong> Efectos de sonido y música, animaciones mejoradas del personaje, niveles de dificultad, más variedad de preguntas, optimización móvil y tabla de mejores puntuaciones.</p>
+        </section>
+
+        <footer>
+            <p>MathBirds - Desarrollado por Americo Oswaldo Ramirez Rocha para Game Development</p>
+        </footer>
+    </div>
+
+</body>
+</html>
