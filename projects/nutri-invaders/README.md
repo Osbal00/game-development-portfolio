@@ -238,13 +238,9 @@ Esta dinámica obliga al jugador a observar y esperar el momento adecuado antes 
 
 ## 🖼️ Capturas de pantalla
 
-### Pantalla inicial
+### Pantalla inicial/Gameplay
 
 La vista inicial muestra el título, los indicadores, la nave, los alimentos, las instrucciones y el botón para reiniciar la partida.
-
-![incio de EcoDrop](./screenshots/inicio.jpg)
-
-### Gameplay
 
 Durante la partida pueden observarse los alimentos en movimiento, los proyectiles, la nave, la puntuación, las vidas y la comida chatarra restante.
 
