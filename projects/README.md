@@ -24,7 +24,7 @@ Simulación y gestión financiera en una ciudad distópica afectada por una cris
 *   **Género:** Simulación, estrategia y gestión de recursos.
 *   **Estado:** Prototipo funcional.
 
-[![Ver Documentación](https://img.shields.io/badge/Ver_Documentación-181717?style=for-the-badge)](./ministerio-del-invierno/)
+[![Ver Documentación](https://img.shields.io/badge/Ver_Documentación-181717?style=for-the-badge)](./ministerio-del-invierno/README.md)
 
 ---
 
@@ -37,7 +37,7 @@ Colección de minijuegos enfocados en el uso responsable del agua. Repara fugas,
 *   **Género:** Educativo, arcade y minijuegos.
 *   **Estado:** Prototipo funcional.
 
-[![Ver Documentación](https://img.shields.io/badge/Ver_Documentación-181717?style=for-the-badge)](./reto-gota/)
+[![Ver Documentación](https://img.shields.io/badge/Ver_Documentación-181717?style=for-the-badge)](./reto-gota/README.md)
 
 ---
 
@@ -50,7 +50,7 @@ Juego de reflejos y agilidad mental. Distintos residuos caen por la pantalla y e
 *   **Género:** Educativo, arcade y juego de reflejos.
 *   **Estado:** Prototipo funcional.
 
-[![Ver Documentación](https://img.shields.io/badge/Ver_Documentación-181717?style=for-the-badge)](./ecodrop/)
+[![Ver Documentación](https://img.shields.io/badge/Ver_Documentación-181717?style=for-the-badge)](./ecodrop/README.md)
 
 ---
 
@@ -63,7 +63,7 @@ Shooter 2D con enfoque educativo. Controla una nave espacial y destruye la comid
 *   **Género:** Arcade educativo y shooter 2D.
 *   **Estado:** Prototipo funcional.
 
-[![Ver Documentación](https://img.shields.io/badge/Ver_Documentación-181717?style=for-the-badge)](./nutri-invaders/)
+[![Ver Documentación](https://img.shields.io/badge/Ver_Documentación-181717?style=for-the-badge)](./nutri-invaders/README.md)
 
 ---
 
@@ -76,4 +76,4 @@ Aventura 2D de control aéreo. Maniobra a un personaje volador para atravesar lo
 *   **Género:** Educativo, arcade y aventura 2D.
 *   **Estado:** Prototipo funcional.
 
-[![Ver Documentación](https://img.shields.io/badge/Ver_Documentación-181717?style=for-the-badge)](./mathbirds/)
+[![Ver Documentación](https://img.shields.io/badge/Ver_Documentación-181717?style=for-the-badge)](./mathbirds/README.md)
