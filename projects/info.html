@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Directorio de Proyectos - Catálogo de Videojuegos</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent-color: #3b82f6;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: var(--text-main);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .btn-back {
+            background-color: #475569;
+            color: white;
+        }
+        .btn-back:hover { background-color: #334155; }
+
+        .intro-text {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            font-size: 1.05rem;
+        }
+
+        .project-card {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        @media (min-width: 768px) {
+            .project-card {
+                flex-direction: row;
+                align-items: center;
+            }
+            .project-img {
+                flex: 0 0 350px;
+            }
+            .project-info {
+                flex: 1;
+            }
+        }
+
+        .project-img img {
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            object-fit: cover;
+            height: 200px;
+        }
+
+        .project-info h2 {
+            margin-top: 0;
+            color: #60a5fa;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .project-meta {
+            list-style: none;
+            padding: 0;
+            margin: 15px 0;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .project-meta li {
+            margin-bottom: 5px;
+        }
+
+        .btn-doc {
+            background-color: #181717;
+            color: white;
+            border: 1px solid var(--border-color);
+        }
+        .btn-doc:hover { background-color: #27272a; }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Directorio de Proyectos</h1>
+            <p class="subtitle">Catálogo de videojuegos y prototipos funcionales</p>
+            <a href="../index.html" class="btn btn-back">Volver al Inicio</a>
+        </header>
+
+        <p class="intro-text">
+            Este directorio aloja el código fuente, los recursos gráficos y la documentación técnica de cada videojuego desarrollado. Explora el catálogo a continuación para acceder a la documentación detallada de cada proyecto. Dentro de cada sección encontrarás las reglas, mecánicas y el enlace para ejecutar la versión jugable en el navegador.
+        </p>
+
+        <div class="project-card">
+            <div class="project-img">
+                <img src="./ministerio-del-invierno/screenshots/gameplay1.jpg" alt="Gameplay de El Ministerio del Invierno">
+            </div>
+            <div class="project-info">
+                <h2>El Ministerio del Invierno <span style="font-size: 0.8rem; background: #3b82f6; color: white; padding: 3px 8px; border-radius: 4px; vertical-align: middle;">Destacado</span></h2>
+                <p>Simulación y gestión financiera en una ciudad distópica afectada por una crisis energética. Trabaja como analista de créditos durante el día y administra tu presupuesto familiar durante la noche para sobrevivir.</p>
+                <ul class="project-meta">
+                    <li><strong>Género:</strong> Simulación, estrategia y gestión de recursos</li>
+                    <li><strong>Estado:</strong> Prototipo funcional</li>
+                </ul>
+                <a href="./ministerio-del-invierno/info.html" class="btn btn-doc">Ver Documentación</a>
+            </div>
+        </div>
+
+        <div class="project-card">
+            <div class="project-img">
+                <img src="./reto-gota/screenshots/gameplay.jpg" alt="Gameplay de Reto Gota">
+            </div>
+            <div class="project-info">
+                <h2>Reto Gota: Salva el Agua</h2>
+                <p>Colección de minijuegos enfocados en el uso responsable del agua. Repara fugas, cierra llaves y recolecta lluvia antes de que se agote el tiempo de 60 segundos.</p>
+                <ul class="project-meta">
+                    <li><strong>Género:</strong> Educativo, arcade y minijuegos</li>
+                    <li><strong>Estado:</strong> Prototipo funcional</li>
+                </ul>
+                <a href="./reto-gota/info.html" class="btn btn-doc">Ver Documentación</a>
+            </div>
+        </div>
+
+        <div class="project-card">
+            <div class="project-img">
+                <img src="./ecodrop/screenshots/gameplay.jpg" alt="Gameplay de EcoDrop">
+            </div>
+            <div class="project-info">
+                <h2>EcoDrop: Clasifica y Recicla</h2>
+                <p>Juego de reflejos y agilidad mental. Distintos residuos caen por la pantalla y el objetivo es moverlos al contenedor de reciclaje correcto (papel, plástico, vidrio, orgánico) antes de que toquen el fondo.</p>
+                <ul class="project-meta">
+                    <li><strong>Género:</strong> Educativo, arcade y juego de reflejos</li>
+                    <li><strong>Estado:</strong> Prototipo funcional</li>
+                </ul>
+                <a href="./ecodrop/info.html" class="btn btn-doc">Ver Documentación</a>
+            </div>
+        </div>
+
+        <div class="project-card">
+            <div class="project-img">
+                <img src="./nutri-invaders/screenshots/gameplay.jpg" alt="Gameplay de Nutri Invaders">
+            </div>
+            <div class="project-info">
+                <h2>Nutri Invaders</h2>
+                <p>Shooter 2D con enfoque educativo. Controla una nave espacial y destruye la comida chatarra para sumar puntos, pero ten cuidado de no disparar a los alimentos saludables o perderás vidas.</p>
+                <ul class="project-meta">
+                    <li><strong>Género:</strong> Arcade educativo y shooter 2D</li>
+                    <li><strong>Estado:</strong> Prototipo funcional</li>
+                </ul>
+                <a href="./nutri-invaders/info.html" class="btn btn-doc">Ver Documentación</a>
+            </div>
+        </div>
+
+        <div class="project-card">
+            <div class="project-img">
+                <img src="./mathbirds/screenshots/gameplay.jpg" alt="Gameplay de MathBirds">
+            </div>
+            <div class="project-info">
+                <h2>MathBirds</h2>
+                <p>Aventura 2D de control aéreo. Maniobra a un personaje volador para atravesar los obstáculos que contienen la respuesta correcta a 10 operaciones matemáticas básicas.</p>
+                <ul class="project-meta">
+                    <li><strong>Género:</strong> Educativo, arcade y aventura 2D</li>
+                    <li><strong>Estado:</strong> Prototipo funcional</li>
+                </ul>
+                <a href="./mathbirds/info.html" class="btn btn-doc">Ver Documentación</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Game Development Portfolio - Catálogo de Proyectos</p>
+        </footer>
+    </div>
+
+</body>
+</html>
