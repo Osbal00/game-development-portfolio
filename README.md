@@ -3,13 +3,7 @@
 <h3 align="center">Ideas, prototipos y experiencias jugables</h3>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Estado-En_desarrollo-FACC15?style=for-the-badge&labelColor=black" alt="Estado">
-  <img src="https://img.shields.io/badge/Área-Game_Development-A855F7?style=for-the-badge&labelColor=black" alt="Área">
-  <img src="https://img.shields.io/badge/Portafolio-Profesional-3B82F6?style=for-the-badge&labelColor=black" alt="Portafolio">
-</p>
-
-<p align="center">
-  <a href="./projects/">
+  <a href="./projects/info.html">
     <img src="https://img.shields.io/badge/Explorar_el_Portafolio-22C55E?style=for-the-badge" alt="Explorar el Portafolio">
   </a>
 </p>
@@ -40,7 +34,11 @@ El propósito principal de este espacio es presentar de manera clara, visual y o
 
 Los proyectos, capturas de pantalla y enlaces jugables se encuentran alojados en la sección principal del portafolio.
 
-[![Ir a la Galería de Proyectos](https://img.shields.io/badge/Ir_a_la_Galería_de_Proyectos-181717?style=for-the-badge)](./projects/)
+<p align="center">
+  <a href="./projects/info.html">
+    <img src="https://img.shields.io/badge/Ir_a_la_Galería_de_Proyectos-181717?style=for-the-badge" alt="Ir a la Galería de Proyectos">
+  </a>
+</p>
 
 ---
 
