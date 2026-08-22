@@ -4,9 +4,13 @@
 
 ### Ideas, prototipos y experiencias jugables
 
-https://img.shields.io/badge/Estado-En%20desarrollo-yellow
-![Área](httpshields.io/badge/Área-Game%20Development-purple
-![Portafolio](https://img.ge/Portafolio-Estudiantil-blue
+![Estado](https://img.shields.io/badge/Estado-En_desarrollo-FACC15?style=for-the-badge&labelColor=black)
+![Área](https://img.shields.io/badge/Área-Game_Development-A855F7?style=for-the-badge&labelColor=black)
+![Portafolio](https://img.shields.io/badge/Portafolio-Profesional-3B82F6?style=for-the-badge&labelColor=black)
+
+<br>
+
+[![Explorar el Portafolio](https://img.shields.io/badge/Explorar_el_Portafolio-22C55E?style=for-the-badge)](./projects/)
 
 </div>
 
@@ -14,79 +18,77 @@ https://img.shields.io/badge/Estado-En%20desarrollo-yellow
 
 ## Sobre mí
 
-Hola, mi nombre es **Americo Oswaldo Ramirez Rocha**. Soy estudiante y me interesa aprender sobre desarrollo de videojuegos, programación, diseño de mecánicas y creación de experiencias interactivas.
+Hola, mi nombre es **Americo Oswaldo Ramirez Rocha**. Soy ingeniero en sistemas informáticos y me interesa el desarrollo de videojuegos, la programación, el diseño de mecánicas y la creación de experiencias interactivas.
 
-Este portafolio reúne los videojuegos y prototipos desarrollados durante las primeras clases de la asignatura **Game Development**.
-
-Cada proyecto representa una oportunidad para aprender sobre programación, creatividad, resolución de problemas y documentación de videojuegos.
+Este repositorio documenta los videojuegos y prototipos desarrollados durante las primeras clases de la asignatura **Game Development**. Cada proyecto representa una oportunidad práctica para aplicar conocimientos de programación, creatividad, resolución de problemas y estructuración técnica.
 
 ---
 
-##  Objetivo del portafolio
+## Objetivo del Portafolio
 
-El objetivo de este repositorio es presentar de manera clara, visual y organizada los videojuegos que desarrollé durante la asignatura.
+El propósito principal de este espacio es presentar de manera clara, visual y organizada los trabajos desarrollados. En la documentación de cada proyecto se detalla:
 
-En cada proyecto documentaré:
-
-- La idea principal.
-- El objetivo del jugador.
-- La mecánica del videojuego.
-- Los controles.
-- Las tecnologías utilizadas.
-- Los elementos desarrollados con apoyo de inteligencia artificial.
-- Los aprendizajes obtenidos.
-- Las posibles mejoras.
+*   La idea principal y el objetivo del jugador.
+*   Las mecánicas y los controles.
+*   Las tecnologías y herramientas utilizadas.
+*   Los elementos desarrollados con apoyo de inteligencia artificial.
+*   Los aprendizajes técnicos obtenidos y posibles mejoras.
 
 ---
 
-## Galería de videojuegos
+## Galería de Videojuegos
 
-Los proyectos y sus capturas serán agregados próximamente.
+Los proyectos, capturas de pantalla y enlaces jugables se encuentran alojados en la sección principal del portafolio.
 
----
-
-## Tecnologías y herramientas
-
-Las tecnologías utilizadas se actualizarán de acuerdo con cada proyecto.
-
-- Git y GitHub.
-- Motor o herramienta de desarrollo por completar.
-- Lenguaje de programación por completar.
-- Herramientas de diseño por completar.
-- Inteligencia artificial como herramienta de apoyo.
+[![Ir a la Galería de Proyectos](https://img.shields.io/badge/Ir_a_la_Galería_de_Proyectos-181717?style=for-the-badge)](./projects/)
 
 ---
 
-## 🤖 Uso responsable de inteligencia artificial
+## Tecnologías y Herramientas
 
-La inteligencia artificial fue utilizada como herramienta de apoyo para organizar la documentación, comprender conceptos, revisar posibles errores y mejorar la presentación del portafolio.
+El stack tecnológico se actualizará conforme se integren nuevos proyectos. Actualmente, el desarrollo contempla:
 
-Todas las sugerencias generadas con IA serán revisadas, adaptadas y probadas antes de incorporarlas a los proyectos.
-
----
-
-## Objetivos de aprendizaje
-
-Durante este proceso busco aprender a:
-
-- Organizar proyectos de videojuegos.
-- Crear prototipos funcionales.
-- Documentar mecánicas y controles.
-- Utilizar GitHub para publicar proyectos.
-- Comunicar de manera profesional el trabajo realizado.
-- Mejorar los proyectos a partir de pruebas y observaciones.
+*   **Control de versiones:** Git y GitHub.
+*   **Despliegue:** GitHub Pages.
+*   **Lenguajes y Motores:** (Por definir según el avance de los proyectos).
+*   **Diseño:** (Herramientas por confirmar).
+*   **Asistencia de desarrollo:** Inteligencia artificial generativa.
 
 ---
 
-## Estado del portafolio
+## Uso Responsable de Inteligencia Artificial
 
-Este portafolio se encuentra actualmente en construcción. Los videojuegos, capturas y documentación individual se agregarán progresivamente.
+La inteligencia artificial se utiliza exclusivamente como una herramienta de apoyo técnico y organizativo. Sus aplicaciones incluyen:
+
+*   Organización y redacción de la documentación.
+*   Comprensión de conceptos avanzados de programación.
+*   Revisión de código y depuración de errores.
+*   Optimización de la presentación del portafolio.
+
+Todas las sugerencias y fragmentos de código generados mediante IA son rigurosamente revisados, adaptados y sometidos a pruebas de calidad (QA) antes de su implementación final.
+
+---
+
+## Objetivos de Aprendizaje
+
+Durante el desarrollo de este repositorio, los objetivos técnicos y profesionales son:
+
+1.  Organizar y estructurar proyectos de videojuegos de forma escalable.
+2.  Crear prototipos funcionales (MVP).
+3.  Elaborar documentación técnica clara para mecánicas y sistemas.
+4.  Dominar el flujo de trabajo en GitHub para publicación y control de versiones.
+5.  Comunicar el trabajo realizado con estándares profesionales.
+6.  Iterar y mejorar los proyectos a partir del análisis de pruebas (playtesting).
+
+---
+
+## Estado del Repositorio
+
+Actualmente, la estructura de este portafolio se encuentra en fase de **construcción y desarrollo**. Los videojuegos, capturas de pantalla y documentación técnica se irán integrando de manera progresiva.
 
 ---
 
 ## Autor
 
-**Americo Oswaldo Ramirez Rocha**
-
-Estudiante de Game Development.
-`
+**Americo Oswaldo Ramirez Rocha**  
+*Ingeniero en sistemas informáticos.*
