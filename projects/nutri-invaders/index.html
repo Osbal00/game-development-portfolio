@@ -1,0 +1,1541 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Nutri Invaders</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    background:
+        radial-gradient(circle at top, #243b68, #080d1c 70%);
+
+    color: white;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+}
+
+
+/* =========================
+   CONTENEDOR
+========================= */
+
+.game-container {
+
+    width: 950px;
+    max-width: 100%;
+
+    background: #10182d;
+
+    border: 3px solid #354c7d;
+
+    border-radius: 20px;
+
+    padding: 20px;
+
+    box-shadow:
+        0 0 30px rgba(0,0,0,.6);
+}
+
+
+/* =========================
+   TITULO
+========================= */
+
+h1 {
+
+    text-align: center;
+
+    margin: 0;
+
+    color: #61dafb;
+
+    font-size: 38px;
+
+    text-shadow:
+        0 0 10px #61dafb;
+}
+
+
+.subtitle {
+
+    text-align: center;
+
+    color: #b9c6e4;
+
+    margin-top: 5px;
+}
+
+
+/* =========================
+   ESTADISTICAS
+========================= */
+
+.stats {
+
+    display: flex;
+
+    justify-content: space-around;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    background: #18233f;
+
+    border-radius: 12px;
+
+    padding: 12px;
+
+    margin: 15px 0;
+
+    font-size: 19px;
+
+    font-weight: bold;
+}
+
+#score {
+
+    color: #ffd93d;
+}
+
+#lives {
+
+    color: #ff6b6b;
+}
+
+#remaining {
+
+    color: #ffb84d;
+}
+
+
+/* =========================
+   CANVAS
+========================= */
+
+canvas {
+
+    display: block;
+
+    width: 100%;
+
+    max-width: 900px;
+
+    height: auto;
+
+    margin: auto;
+
+    background:
+        linear-gradient(
+            #050a17,
+            #0a1329
+        );
+
+    border: 4px solid #526da8;
+
+    border-radius: 10px;
+
+    box-shadow:
+        inset 0 0 30px rgba(0,0,0,.8);
+}
+
+
+/* =========================
+   MENSAJE
+========================= */
+
+#message {
+
+    text-align: center;
+
+    min-height: 30px;
+
+    margin: 12px 0;
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    color: #d9e4ff;
+}
+
+
+/* =========================
+   INSTRUCCIONES
+========================= */
+
+.instructions {
+
+    background: #18233f;
+
+    border-radius: 12px;
+
+    padding: 12px;
+
+    text-align: center;
+
+    line-height: 1.5;
+
+    color: #cbd7f2;
+}
+
+
+/* =========================
+   BOTONES
+========================= */
+
+button {
+
+    display: block;
+
+    margin: 15px auto 0;
+
+    padding: 12px 25px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #2878ff;
+
+    color: white;
+
+    font-size: 17px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+button:hover {
+
+    background: #145ed1;
+}
+
+
+/* =========================
+   CONTROLES MOVILES
+========================= */
+
+.mobile-controls {
+
+    display: none;
+
+    text-align: center;
+
+    margin-top: 10px;
+}
+
+.mobile-controls button {
+
+    display: inline-block;
+
+    width: 60px;
+
+    height: 45px;
+
+    margin: 3px;
+
+    padding: 0;
+}
+
+
+@media(max-width:700px) {
+
+    h1 {
+        font-size: 28px;
+    }
+
+    .stats {
+        font-size: 15px;
+    }
+
+    .mobile-controls {
+        display: block;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<div class="game-container">
+
+    <h1>🚀 Nutri Invaders</h1>
+
+    <p class="subtitle">
+        ¡Destruye la comida chatarra y protege los alimentos saludables!
+    </p>
+
+
+    <div class="stats">
+
+        <div>
+            ⭐ Puntos:
+            <span id="score">0</span>
+        </div>
+
+        <div>
+            ❤️ Vidas:
+            <span id="lives">3</span>
+        </div>
+
+        <div>
+            🍔 Chatarra:
+            <span id="remaining">0</span>
+        </div>
+
+    </div>
+
+
+    <canvas
+        id="gameCanvas"
+        width="900"
+        height="600">
+    </canvas>
+
+
+    <div id="message">
+        🎯 ¡Dispara solamente a la comida chatarra!
+    </div>
+
+
+    <div class="instructions">
+
+        🟥 <b>Comida chatarra:</b>
+        ¡DISPARA!
+
+        &nbsp;&nbsp;&nbsp;
+
+        🟩 <b>Comida saludable:</b>
+        ¡NO DISPARAR!
+
+        <br>
+
+        Mueve la nave con
+        <b>← →</b>
+        o
+        <b>A / D</b>
+        y dispara con
+        <b>ESPACIO</b>.
+
+        <br>
+
+        Las filas se mueven con diferentes velocidades. Espera el momento correcto para disparar.
+
+    </div>
+
+
+    <div class="mobile-controls">
+
+        <button onclick="moveLeft()">⬅️</button>
+
+        <button onclick="shoot()">🔫</button>
+
+        <button onclick="moveRight()">➡️</button>
+
+    </div>
+
+
+    <button onclick="restartGame()">
+        🔄 Reiniciar juego
+    </button>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   CONFIGURACIÓN
+========================================================= */
+
+const canvas =
+    document.getElementById("gameCanvas");
+
+const ctx =
+    canvas.getContext("2d");
+
+
+const scoreElement =
+    document.getElementById("score");
+
+const livesElement =
+    document.getElementById("lives");
+
+const remainingElement =
+    document.getElementById("remaining");
+
+const messageElement =
+    document.getElementById("message");
+
+
+/* =========================================================
+   JUGADOR
+========================================================= */
+
+const player = {
+
+    x: canvas.width / 2 - 35,
+
+    y: canvas.height - 75,
+
+    width: 70,
+
+    height: 45,
+
+    speed: 7
+};
+
+
+/* =========================================================
+   ESTADO
+========================================================= */
+
+let score = 0;
+
+let lives = 3;
+
+let gameOver = false;
+
+let gameWon = false;
+
+
+/* =========================================================
+   TECLADO
+========================================================= */
+
+const keys = {};
+
+
+/* =========================================================
+   BALAS
+========================================================= */
+
+let bullets = [];
+
+
+/* =========================================================
+   ALIMENTOS Y FILAS
+========================================================= */
+
+let foods = [];
+
+let rowSettings = [];
+
+
+/*
+    Tipos de alimentos.
+
+    healthy = true  -> comida saludable
+    healthy = false -> comida chatarra
+*/
+
+const healthyFoods = [
+
+    {
+        emoji: "🍎",
+        name: "Manzana",
+        healthy: true
+    },
+
+    {
+        emoji: "🥦",
+        name: "Brócoli",
+        healthy: true
+    },
+
+    {
+        emoji: "🥕",
+        name: "Zanahoria",
+        healthy: true
+    },
+
+    {
+        emoji: "🍌",
+        name: "Banana",
+        healthy: true
+    },
+
+    {
+        emoji: "🥗",
+        name: "Ensalada",
+        healthy: true
+    },
+
+    {
+        emoji: "💧",
+        name: "Agua",
+        healthy: true
+    }
+];
+
+
+const junkFoods = [
+
+    {
+        emoji: "🍔",
+        name: "Hamburguesa",
+        healthy: false
+    },
+
+    {
+        emoji: "🍟",
+        name: "Papas fritas",
+        healthy: false
+    },
+
+    {
+        emoji: "🍩",
+        name: "Dona",
+        healthy: false
+    },
+
+    {
+        emoji: "🍕",
+        name: "Pizza",
+        healthy: false
+    },
+
+    {
+        emoji: "🍫",
+        name: "Chocolate",
+        healthy: false
+    },
+
+    {
+        emoji: "🍬",
+        name: "Dulce",
+        healthy: false
+    },
+
+    {
+        emoji: "🥤",
+        name: "Gaseosa",
+        healthy: false
+    }
+];
+
+
+/* =========================================================
+   CREAR ALIMENTOS
+========================================================= */
+
+function createFoods() {
+
+    foods = [];
+
+    rowSettings = [];
+
+    /*
+        5 filas x 8 alimentos.
+        Algunas filas tienen más chatarra y otras más saludables.
+        Esto hace que el jugador tenga que observar antes de disparar.
+    */
+
+    const rows = 5;
+
+    const columns = 8;
+
+    const startX = 75;
+
+    const startY = 80;
+
+    const gapX = 95;
+
+    const gapY = 70;
+
+
+    for(let row = 0; row < rows; row++) {
+
+        /*
+            Cada fila tiene movimiento propio.
+            Esto soluciona el problema de los alimentos alineados.
+        */
+
+        rowSettings.push({
+
+            offsetX: 0,
+
+            direction:
+                row % 2 === 0
+                    ? 1
+                    : -1,
+
+            speed:
+                0.5 + row * 0.18,
+
+            maxOffset:
+                42 + row * 8
+        });
+
+
+        for(let col = 0; col < columns; col++) {
+
+            /*
+                Desfase inicial por fila.
+                Así no todas las columnas quedan una encima de otra.
+            */
+
+            const initialShift =
+                row % 2 === 0
+                    ? 0
+                    : 45;
+
+
+            /*
+                Probabilidad:
+                60% chatarra, 40% saludable.
+                Así el objetivo del juego se mantiene claro:
+                destruir comida chatarra.
+            */
+
+            let type;
+
+            if(Math.random() < 0.6) {
+
+                type =
+                    junkFoods[
+                        Math.floor(
+                            Math.random() *
+                            junkFoods.length
+                        )
+                    ];
+
+            } else {
+
+                type =
+                    healthyFoods[
+                        Math.floor(
+                            Math.random() *
+                            healthyFoods.length
+                        )
+                    ];
+            }
+
+
+            foods.push({
+
+                baseX:
+                    startX +
+                    col * gapX +
+                    initialShift,
+
+                x:
+                    startX +
+                    col * gapX +
+                    initialShift,
+
+                y:
+                    startY +
+                    row * gapY,
+
+                row: row,
+
+                width: 36,
+
+                height: 36,
+
+                emoji: type.emoji,
+
+                name: type.name,
+
+                healthy: type.healthy,
+
+                alive: true
+            });
+        }
+    }
+
+
+    /*
+        Evitar que el juego se genere sin comida chatarra.
+    */
+
+    if(countJunk() === 0) {
+
+        const randomFood =
+            foods[
+                Math.floor(
+                    Math.random() *
+                    foods.length
+                )
+            ];
+
+        const randomJunk =
+            junkFoods[
+                Math.floor(
+                    Math.random() *
+                    junkFoods.length
+                )
+            ];
+
+        randomFood.emoji = randomJunk.emoji;
+        randomFood.name = randomJunk.name;
+        randomFood.healthy = false;
+    }
+
+
+    updateRemaining();
+}
+
+
+/* =========================================================
+   MOVER FILAS DE ALIMENTOS
+========================================================= */
+
+function updateFoodMovement() {
+
+    for(let i = 0; i < rowSettings.length; i++) {
+
+        const row =
+            rowSettings[i];
+
+
+        row.offsetX +=
+            row.speed *
+            row.direction;
+
+
+        /*
+            Cuando una fila llega a su límite,
+            cambia de dirección.
+        */
+
+        if(
+            row.offsetX > row.maxOffset ||
+            row.offsetX < -row.maxOffset
+        ) {
+
+            row.direction *= -1;
+        }
+    }
+
+
+    /*
+        Actualizar la posición real de cada alimento
+        usando el movimiento de su fila.
+    */
+
+    for(const food of foods) {
+
+        const row =
+            rowSettings[
+                food.row
+            ];
+
+        food.x =
+            food.baseX +
+            row.offsetX;
+    }
+}
+
+
+/* =========================================================
+   DIBUJAR FONDO
+========================================================= */
+
+function drawBackground() {
+
+    ctx.fillStyle = "#050a17";
+
+    ctx.fillRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+
+    /*
+        Estrellas fijas
+    */
+
+    ctx.fillStyle = "rgba(255,255,255,.5)";
+
+    for(let i = 0; i < 80; i++) {
+
+        const x =
+            (i * 137) %
+            canvas.width;
+
+        const y =
+            (i * 71) %
+            canvas.height;
+
+        ctx.fillRect(
+            x,
+            y,
+            2,
+            2
+        );
+    }
+}
+
+
+/* =========================================================
+   DIBUJAR JUGADOR
+========================================================= */
+
+function drawPlayer() {
+
+    /*
+        Nave espacial
+    */
+
+    ctx.save();
+
+    ctx.translate(
+        player.x + player.width / 2,
+        player.y + player.height / 2
+    );
+
+
+    /*
+        Cuerpo de la nave
+    */
+
+    ctx.fillStyle = "#43b5ff";
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        0,
+        -25
+    );
+
+    ctx.lineTo(
+        -32,
+        22
+    );
+
+    ctx.lineTo(
+        32,
+        22
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+
+    /*
+        Borde
+    */
+
+    ctx.strokeStyle = "#a8e9ff";
+
+    ctx.lineWidth = 3;
+
+    ctx.stroke();
+
+
+    /*
+        Cabina
+    */
+
+    ctx.fillStyle = "#d9f7ff";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        0,
+        -5,
+        10,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fill();
+
+
+    /*
+        Propulsores
+    */
+
+    ctx.fillStyle = "#ff8c42";
+
+    ctx.fillRect(
+        -24,
+        18,
+        10,
+        10
+    );
+
+    ctx.fillRect(
+        14,
+        18,
+        10,
+        10
+    );
+
+
+    ctx.restore();
+}
+
+
+/* =========================================================
+   DIBUJAR ALIMENTOS
+========================================================= */
+
+function drawFoods() {
+
+    for(const food of foods) {
+
+        if(!food.alive) {
+            continue;
+        }
+
+
+        /*
+            Aura verde para saludables
+            Aura roja para chatarra
+        */
+
+        ctx.beginPath();
+
+        ctx.arc(
+            food.x + food.width / 2,
+            food.y + food.height / 2,
+            25,
+            0,
+            Math.PI * 2
+        );
+
+
+        if(food.healthy) {
+
+            ctx.fillStyle =
+                "rgba(50,220,100,.12)";
+
+            ctx.strokeStyle =
+                "rgba(50,220,100,.38)";
+
+        } else {
+
+            ctx.fillStyle =
+                "rgba(255,60,60,.12)";
+
+            ctx.strokeStyle =
+                "rgba(255,60,60,.45)";
+        }
+
+
+        ctx.fill();
+
+        ctx.lineWidth = 2;
+
+        ctx.stroke();
+
+
+        /*
+            Emoji
+        */
+
+        ctx.font = "32px Arial";
+
+        ctx.textAlign = "center";
+
+        ctx.textBaseline = "middle";
+
+        ctx.fillText(
+            food.emoji,
+
+            food.x +
+            food.width / 2,
+
+            food.y +
+            food.height / 2
+        );
+    }
+}
+
+
+/* =========================================================
+   DIBUJAR BALAS
+========================================================= */
+
+function drawBullets() {
+
+    for(const bullet of bullets) {
+
+        ctx.fillStyle = "#ffe45c";
+
+        ctx.shadowColor = "#ffe45c";
+
+        ctx.shadowBlur = 10;
+
+        ctx.fillRect(
+            bullet.x,
+            bullet.y,
+            bullet.width,
+            bullet.height
+        );
+
+        ctx.shadowBlur = 0;
+    }
+}
+
+
+/* =========================================================
+   DISPARAR
+========================================================= */
+
+function shoot() {
+
+    if(
+        gameOver ||
+        gameWon
+    ) {
+        return;
+    }
+
+
+    /*
+        Limitar cantidad de balas para que no sea spam.
+    */
+
+    if(bullets.length >= 4) {
+        return;
+    }
+
+
+    bullets.push({
+
+        x:
+            player.x +
+            player.width / 2 -
+            3,
+
+        y:
+            player.y,
+
+        width: 6,
+
+        height: 18,
+
+        speed: 11
+    });
+}
+
+
+/* =========================================================
+   MOVER JUGADOR
+========================================================= */
+
+function updatePlayer() {
+
+    if(keys["ArrowLeft"] ||
+       keys["a"] ||
+       keys["A"]) {
+
+        player.x -= player.speed;
+    }
+
+
+    if(keys["ArrowRight"] ||
+       keys["d"] ||
+       keys["D"]) {
+
+        player.x += player.speed;
+    }
+
+
+    /*
+        No salir de la pantalla
+    */
+
+    if(player.x < 0) {
+
+        player.x = 0;
+    }
+
+
+    if(
+        player.x +
+        player.width >
+        canvas.width
+    ) {
+
+        player.x =
+            canvas.width -
+            player.width;
+    }
+}
+
+
+/* =========================================================
+   ACTUALIZAR BALAS
+========================================================= */
+
+function updateBullets() {
+
+    for(let i = bullets.length - 1; i >= 0; i--) {
+
+        const bullet =
+            bullets[i];
+
+
+        bullet.y -=
+            bullet.speed;
+
+
+        /*
+            Eliminar bala si sale de la pantalla.
+        */
+
+        if(bullet.y < -30) {
+
+            bullets.splice(i, 1);
+
+            continue;
+        }
+
+
+        /*
+            Comprobar colisión de bala con alimentos.
+        */
+
+        for(const food of foods) {
+
+            if(!food.alive) {
+                continue;
+            }
+
+
+            if(
+                collision(
+                    bullet,
+                    food
+                )
+            ) {
+
+                if(food.healthy) {
+
+                    /*
+                        Error:
+                        disparó a comida saludable.
+                    */
+
+                    food.alive = false;
+
+                    lives--;
+
+                    livesElement.textContent =
+                        lives;
+
+
+                    messageElement.textContent =
+                        "❌ ¡Cuidado! Destruiste un alimento saludable.";
+
+                    messageElement.style.color =
+                        "#ff6b6b";
+
+
+                    bullets.splice(
+                        i,
+                        1
+                    );
+
+
+                    if(lives <= 0) {
+
+                        endGame(false);
+                    }
+
+                } else {
+
+                    /*
+                        Acierto:
+                        destruyó comida chatarra.
+                    */
+
+                    food.alive = false;
+
+                    score += 10;
+
+                    scoreElement.textContent =
+                        score;
+
+
+                    messageElement.textContent =
+                        `💥 ¡${food.name} destruida! +10 puntos`;
+
+                    messageElement.style.color =
+                        "#61e294";
+
+
+                    bullets.splice(
+                        i,
+                        1
+                    );
+
+
+                    updateRemaining();
+
+
+                    if(
+                        countJunk() === 0
+                    ) {
+
+                        endGame(true);
+                    }
+                }
+
+
+                break;
+            }
+        }
+    }
+}
+
+
+/* =========================================================
+   COLISIONES
+========================================================= */
+
+function collision(a, b) {
+
+    return (
+
+        a.x <
+        b.x + b.width &&
+
+        a.x + a.width >
+        b.x &&
+
+        a.y <
+        b.y + b.height &&
+
+        a.y + a.height >
+        b.y
+    );
+}
+
+
+/* =========================================================
+   CONTAR CHATARRA
+========================================================= */
+
+function countJunk() {
+
+    return foods.filter(
+        food =>
+            food.healthy === false &&
+            food.alive
+    ).length;
+}
+
+
+function updateRemaining() {
+
+    remainingElement.textContent =
+        countJunk();
+}
+
+
+/* =========================================================
+   FIN DEL JUEGO
+========================================================= */
+
+function endGame(won) {
+
+    if(won) {
+
+        gameWon = true;
+
+        messageElement.textContent =
+            "🏆 ¡GANASTE! ¡Eliminaste toda la comida chatarra!";
+
+        messageElement.style.color =
+            "#61e294";
+
+    } else {
+
+        gameOver = true;
+
+        messageElement.textContent =
+            "💀 GAME OVER. ¡Protege mejor los alimentos saludables!";
+
+        messageElement.style.color =
+            "#ff6b6b";
+    }
+}
+
+
+/* =========================================================
+   DIBUJAR PANTALLA FINAL
+========================================================= */
+
+function drawEndScreen() {
+
+    if(!gameOver && !gameWon) {
+        return;
+    }
+
+
+    ctx.fillStyle =
+        "rgba(3,7,18,.82)";
+
+    ctx.fillRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+
+    ctx.textAlign = "center";
+
+
+    if(gameWon) {
+
+        ctx.font =
+            "bold 58px Arial";
+
+        ctx.fillStyle =
+            "#61e294";
+
+        ctx.fillText(
+            "🏆 ¡GANASTE!",
+            canvas.width / 2,
+            canvas.height / 2 - 40
+        );
+
+
+        ctx.font =
+            "26px Arial";
+
+        ctx.fillStyle =
+            "white";
+
+        ctx.fillText(
+            "¡Destruiste toda la comida chatarra!",
+            canvas.width / 2,
+            canvas.height / 2 + 15
+        );
+
+
+        ctx.fillText(
+            `Puntaje final: ${score}`,
+            canvas.width / 2,
+            canvas.height / 2 + 55
+        );
+
+    } else {
+
+        ctx.font =
+            "bold 58px Arial";
+
+        ctx.fillStyle =
+            "#ff6b6b";
+
+        ctx.fillText(
+            "💀 GAME OVER",
+            canvas.width / 2,
+            canvas.height / 2 - 40
+        );
+
+
+        ctx.font =
+            "26px Arial";
+
+        ctx.fillStyle =
+            "white";
+
+        ctx.fillText(
+            "¡Recuerda proteger la comida saludable!",
+            canvas.width / 2,
+            canvas.height / 2 + 15
+        );
+
+
+        ctx.fillText(
+            `Puntaje final: ${score}`,
+            canvas.width / 2,
+            canvas.height / 2 + 55
+        );
+    }
+}
+
+
+/* =========================================================
+   BUCLE PRINCIPAL
+========================================================= */
+
+function gameLoop() {
+
+    drawBackground();
+
+    if(!gameOver && !gameWon) {
+
+        updatePlayer();
+
+        updateFoodMovement();
+
+        updateBullets();
+    }
+
+    drawFoods();
+
+    drawBullets();
+
+    drawPlayer();
+
+    drawEndScreen();
+
+    requestAnimationFrame(
+        gameLoop
+    );
+}
+
+
+/* =========================================================
+   TECLADO
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        keys[event.key] = true;
+
+
+        if(
+            event.code ===
+            "Space"
+        ) {
+
+            event.preventDefault();
+
+            shoot();
+        }
+    }
+);
+
+
+document.addEventListener(
+    "keyup",
+    function(event) {
+
+        keys[event.key] = false;
+    }
+);
+
+
+/* =========================================================
+   CONTROLES MOVILES
+========================================================= */
+
+function moveLeft() {
+
+    if(!gameOver && !gameWon) {
+
+        player.x -= 45;
+
+        if(player.x < 0) {
+            player.x = 0;
+        }
+    }
+}
+
+
+function moveRight() {
+
+    if(!gameOver && !gameWon) {
+
+        player.x += 45;
+
+        if(
+            player.x +
+            player.width >
+            canvas.width
+        ) {
+
+            player.x =
+                canvas.width -
+                player.width;
+        }
+    }
+}
+
+
+/* =========================================================
+   REINICIAR
+========================================================= */
+
+function restartGame() {
+
+    score = 0;
+
+    lives = 3;
+
+    gameOver = false;
+
+    gameWon = false;
+
+
+    player.x =
+        canvas.width / 2 -
+        player.width / 2;
+
+
+    player.y =
+        canvas.height - 75;
+
+
+    bullets = [];
+
+
+    scoreElement.textContent =
+        score;
+
+    livesElement.textContent =
+        lives;
+
+
+    createFoods();
+
+
+    messageElement.textContent =
+        "🎯 ¡Dispara solamente a la comida chatarra!";
+
+    messageElement.style.color =
+        "#d9e4ff";
+}
+
+
+/* =========================================================
+   INICIAR
+========================================================= */
+
+createFoods();
+
+gameLoop();
+
+</script>
+
+</body>
+</html>
